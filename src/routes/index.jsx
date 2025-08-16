@@ -4,7 +4,7 @@ import LoginPage from "../pages/login/LoginPage";
 
 const publicRoutes = [
     { path: '/', component: HomePage, layout: DefaultLayout },
-    { path: '/login', component: LoginPage }
+    { path: '/login', component: LoginPage, layout: null }
 ]
 
 const privateRoutes = [

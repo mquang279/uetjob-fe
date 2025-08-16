@@ -1,8 +1,7 @@
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+import { API_BASE_URL } from '../constants/constant';
 
-// Helper function to get authorization headers
 const getAuthHeaders = () => {
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcXVhbmcyNzk5MkBnbWFpbC5jb20iLCJleHAiOjE3NTU1MjE4NzMsImlhdCI6MTc1NTE2MTg3MywidXNlciI6eyJpZCI6MiwidXNlcm5hbWUiOiJhZG1pbiIsImVtYWlsIjoibXF1YW5nMjc5OTJAZ21haWwuY29tIn19.QOnETs-JUizrZ1fyESbnQ0eCbLmMtAtPfZ2nxo4h_ZH2IJlgrOwjcPst3YfybLmgQ7mzH9CG2WpAfmR7ufki3Q'; // or wherever you store your token
+  const token = '';
   return {
     'Content-Type': 'application/json',
     ...(token && { 'Authorization': `Bearer ${token}` })

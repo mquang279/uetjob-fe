@@ -9,11 +9,11 @@ const Button = ({
     onClick,
     ...props
 }) => {
-    const baseStyles = "font-medium flex items-center justify-center gap-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+    const baseStyles = "font-bold flex items-center justify-center gap-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
 
     const variants = {
         primary: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
-        secondary: "border-2 bg-white border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:ring-red-500",
+        secondary: "border-1 bg-white border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:ring-red-500",
         ghost: "text-red-600 hover:bg-red-50 focus:ring-red-500",
         danger: "bg-red-500 hover:bg-red-600 text-white focus:ring-red-500",
         success: "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500"

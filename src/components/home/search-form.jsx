@@ -2,7 +2,7 @@ import { NavLink } from "react-router"
 import { useJobsCount } from "../../hooks/useJobs"
 import SearchBar from "../ui/search-bar"
 
-const suggestions = [
+const SKILL_SUGGESTIONS = [
     'Java',
     'ReactJS',
     '.NET',
@@ -25,8 +25,8 @@ const SearchForm = () => {
             <div className="suggestion flex gap-8 w-full items-center">
                 <p className="font-medium">Suggestions for you:</p>
                 <div className="suggestion-field flex gap-2 flex-wrap">
-                    {suggestions.map((field, index) =>
-                        <NavLink href="" className="py-[6px] px-[12px] font-semibold border bg-black border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-[#414042]" key={index}>{field}</NavLink>
+                    {SKILL_SUGGESTIONS.map((skill, index) =>
+                        <NavLink href="" className="py-[6px] px-[12px] font-semibold border bg-black border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-[#414042]" key={index}>{skill}</NavLink>
                     )}
                 </div>
             </div>
