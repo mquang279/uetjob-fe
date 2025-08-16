@@ -1,4 +1,4 @@
-import SearchForm from "../../components/home/search-form"
+import SearchForm from "../../components/home/search.form"
 
 const HomePage = () => {
     return (

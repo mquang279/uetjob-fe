@@ -3,7 +3,7 @@ import Header from "./components/layout/header"
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from "react-router"
 import HomePage from "./pages/home/Home"
 import { publicRoutes } from "./routes"
-import DefaultLayout from "./components/layout/default-layout"
+import DefaultLayout from "./components/layout/default.layout"
 import { Fragment } from "react"
 
 function App() {

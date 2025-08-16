@@ -1,127 +1,156 @@
 import { useState } from "react"
+import { NavLink } from "react-router"
 import Button from "../../components/ui/button"
-import Header from "../../components/layout/header"
-import { Check } from 'lucide-react';
-import { EyeOff } from 'lucide-react';
-import { Eye } from 'lucide-react';
+import { Check, Eye, EyeOff } from 'lucide-react'
+import Divider from "../../components/login/divider"
+import PasswordInput from "../../components/login/password.input"
+import FormInput from "../../components/login/form.input"
 
+const GOOGLE_LOGO_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png"
+
+const BENEFITS = [
+    "View salary to help you negotiate your offer or pay rise",
+    "Find out about benefits, interview, company culture via reviews",
+    "Easy apply with only 1 click",
+    "Manage your own profile & privacy"
+]
+
+const BenefitsList = () => (
+    <div className="bg-gray-50 p-6 rounded-lg">
+        <h2 className="font-bold text-xl lg:text-2xl text-black mb-6 leading-tight">
+            Sign in to get instant access to thousands of reviews and salary information
+        </h2>
+        <ul className="space-y-4">
+            {BENEFITS.map((benefit, index) => (
+                <li key={index} className="flex items-start gap-3">
+                    <Check className="text-green-500 flex-shrink-0 mt-0.5" size={20} />
+                    <span className="text-black leading-relaxed">{benefit}</span>
+                </li>
+            ))}
+        </ul>
+    </div>
+)
+
+
+// Main LoginPage Component
 const LoginPage = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
     const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleSubmit = () => {
+    const handleInputChange = (field) => (e) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: e.target.value
+        }))
+    }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+
+        try {
+            // TODO: Implement authentication logic
+            console.log('Login attempt:', formData)
+        } catch (error) {
+            console.error('Login error:', error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const handleGoogleSignIn = () => {
+        console.log('Google sign in clicked')
     }
 
     return (
-        <>
-            <Header />
-            <div className="login-page flex px-8 pt-8 gap-28 items-center">
-                <div className="login-form basis-xl">
-                    <h1 className="text-2xl font-bold">Welcome to UETJob</h1>
-                    <p className="my-2 text-sm text-gray-700">
-                        By signing in, you agree to UETJob's {' '}
-                        <a href="#" className="text-blue-600 font-medium">
-                            Terms & Conditions
-                        </a> {' '}
-                        and {' '}
-                        <a href="#" className="text-blue-600 font-medium">
-                            Privacy Policy
-                        </a> {' '}
-                        in relation to your privacy information.
-                    </p>
-                    <Button className="w-full" variant="secondary">
-                        <img className="w-6 h-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png" alt="google_icon" />
-                        Sign In with Google
-                    </Button>
+        <div className="bg-gray-50">
+            <main className="container mx-auto px-4 py-6 lg:py-8">
+                <div className="flex flex-col items-center lg:flex-row gap-8 lg:gap-16 xl:gap-24 max-w-6xl mx-auto">
+                    {/* Login Form Section */}
+                    <div className="flex-1 max-w-md mx-auto lg:mx-0">
+                        <div className="bg-white p-6 lg:p-8 rounded-lg shadow-sm border">
+                            <header className="mb-6">
+                                <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-3">
+                                    Welcome to UETJob
+                                </h1>
+                                <p className="text-sm text-gray-600 leading-relaxed">
+                                    By signing in, you agree to UETJob's{' '}
+                                    <NavLink to="/terms" className="text-blue-600 font-medium hover:underline">
+                                        Terms & Conditions
+                                    </NavLink>{' '}
+                                    and{' '}
+                                    <NavLink to="/privacy" className="text-blue-600 font-medium hover:underline">
+                                        Privacy Policy
+                                    </NavLink>{' '}
+                                    in relation to your privacy information.
+                                </p>
+                            </header>
 
-                    <div className="flex items-center text-black py-[12px]">
-                        <hr className="flex-grow border-t border-gray-300" />
-                        <span className="mx-3 font-medium">or</span>
-                        <hr className="flex-grow border-t border-gray-300" />
+                            {/* Google Sign In */}
+                            <Button
+                                className="w-full mb-4"
+                                variant="secondary"
+                                onClick={handleGoogleSignIn}
+                                disabled={isLoading}
+                            >
+                                <img
+                                    className="w-5 h-5 mr-3"
+                                    src={GOOGLE_LOGO_URL}
+                                    alt="Google"
+                                />
+                                Sign In with Google
+                            </Button>
+
+                            <Divider text="or" />
+
+                            {/* Email/Password Form */}
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <FormInput
+                                    label="Email"
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange('email')}
+                                    placeholder="Enter your email"
+                                    required
+                                />
+
+                                <PasswordInput
+                                    value={formData.password}
+                                    onChange={handleInputChange('password')}
+                                    showPassword={showPassword}
+                                    toggleShowPassword={() => setShowPassword(!showPassword)}
+                                />
+
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    className="w-full"
+                                    disabled={isLoading || !formData.email || !formData.password}
+                                >
+                                    {isLoading ? 'Signing In...' : 'Sign In with Email'}
+                                </Button>
+                            </form>
+
+                            {/* Sign Up Link */}
+                            <p className="text-center text-gray-600 mt-6">
+                                Don't have an account?{' '}
+                                <NavLink to="/register" className="text-blue-600 font-medium hover:underline">
+                                    Sign up now!
+                                </NavLink>
+                            </p>
+                        </div>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
-                        {/* Email field */}
-                        <label className="block font-medium">
-                            Email <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                            type="text"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email"
-                            className="px-3 py-2 w-full border border-gray-400 rounded-md my-2"
-                        />
-
-                        {/* Password field */}
-                        <div className="flex mb-1 font-medium justify-between items-center">
-                            <label className="">
-                                Password <span className="text-red-500">*</span>
-                            </label>
-                            <a href="#" className="text-blue-600 text-sm" tabIndex={-1}>
-                                Forgot password?
-                            </a>
-                        </div>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Password"
-                                className="px-3 py-2 w-full border border-gray-400 rounded-md my-2"
-                            />
-                            <button
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
-                                onClick={(e) => {
-                                    e.preventDefault()
-                                    setShowPassword(!showPassword)
-                                }}
-                            >
-                                {showPassword ? <Eye /> : < EyeOff />}
-                            </button>
-                        </div>
-
-                        {/* Submit Button */}
-                        <Button variant="primary" className="w-full my-2">
-                            Sign In with Email
-                        </Button>
-
-                        {/* Footer */}
-                        <p className="text-center text-gray-700 mt-4">
-                            Do not have an account?{" "}
-                            <a href="#" className="text-blue-600 font-medium">
-                                Sign up now!
-                            </a>
-                        </p>
-                    </form>
+                    <div className="flex-1">
+                        <BenefitsList />
+                    </div>
                 </div>
-
-                <div className="information">
-                    <h1 className="font-bold text-2xl">Sign in to get instant access to thousands of reviews and salary information</h1>
-                    <ul className="mt-4">
-                        <li className="mb-2 flex items-center gap-2">
-                            <Check className="text-green-500 flex-shrink-0" />
-                            <span>View salary to help you negotiate your offer or pay rise</span>
-                        </li>
-                        <li className="mb-2 flex items-center gap-2">
-                            <Check className="text-green-500 flex-shrink-0" />
-                            <span>Find out about benefits, interview, company culture via reviews</span>
-                        </li>
-                        <li className="mb-2 flex items-center gap-2">
-                            <Check className="text-green-500 flex-shrink-0" />
-                            <span>Easy apply with only 1 click</span>
-                        </li>
-                        <li className="mb-2 flex items-center gap-2">
-                            <Check className="text-green-500 flex-shrink-0" />
-                            <span>Manage your own profile & privacy</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </>
-
+            </main>
+        </div>
     )
 }
 

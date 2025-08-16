@@ -1,4 +1,4 @@
-import DefaultLayout from "../components/layout/default-layout";
+import DefaultLayout from "../components/layout/default.layout";
 import HomePage from "../pages/home/Home";
 import LoginPage from "../pages/login/LoginPage";
 
