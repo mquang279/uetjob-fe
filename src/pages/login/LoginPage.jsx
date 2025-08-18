@@ -2,9 +2,9 @@ import { useState } from "react"
 import { NavLink } from "react-router"
 import Button from "../../components/ui/button"
 import { Check, Eye, EyeOff } from 'lucide-react'
-import Divider from "../../components/login/divider"
-import PasswordInput from "../../components/login/password.input"
-import FormInput from "../../components/login/form.input"
+import Divider from "../../components/login/Divider"
+import PasswordInput from "../../components/login/PasswordInput"
+import FormInput from "../../components/login/FormInput"
 
 const GOOGLE_LOGO_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png"
 

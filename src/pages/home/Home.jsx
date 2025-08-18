@@ -1,9 +1,12 @@
-import SearchForm from "../../components/home/search.form"
+import JobDisplay from "../../components/home/JobDisplay"
+import SearchForm from "../../components/home/SearchForm"
 
 const HomePage = () => {
+
     return (
-        <div className="home-page min-h-250">
+        <div className="home-page min-h-screen">
             <SearchForm />
+            <JobDisplay />
         </div>
     )
 }

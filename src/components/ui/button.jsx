@@ -20,7 +20,7 @@ const Button = ({
     }
 
     const sizes = {
-        small: "w-[50px] px-10 py-1.5 text-sm",
+        small: "w-[150px] px-5 py-1.5 text-sm",
         medium: "min-w-3xs h-[52px] px-12 py-2 text-base",
         large: "px-16 py-3 text-lg"
     }
