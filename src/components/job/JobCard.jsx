@@ -27,7 +27,7 @@ const JobCard = ({ job }) => {
     }
 
     return (
-        <div className="job-card bg-white rounded-lg border shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+        <div className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
             <div className='px-3 py-3'>
                 <div className="job-header flex gap-3 justify-between items-start">
                     <div className="flex gap-3">

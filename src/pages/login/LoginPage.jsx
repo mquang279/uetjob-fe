@@ -67,8 +67,8 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="bg-gray-50">
-            <main className="container mx-auto px-4 py-6 lg:py-8">
+        <div className="bg-gray-50 min-h-screen flex items-center">
+            <main className="container mx-auto px-4 py-6 lg:py-8 w-full">
                 <div className="flex flex-col items-center lg:flex-row gap-8 lg:gap-16 xl:gap-24 max-w-6xl mx-auto">
                     {/* Login Form Section */}
                     <div className="flex-1 max-w-md mx-auto lg:mx-0">
