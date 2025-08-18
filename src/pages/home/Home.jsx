@@ -4,7 +4,7 @@ import SearchForm from "../../components/home/SearchForm"
 const HomePage = () => {
 
     return (
-        <div className="home-page min-h-screen">
+        <div className="home-page">
             <SearchForm />
             <JobDisplay />
         </div>

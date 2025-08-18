@@ -61,9 +61,6 @@ const JobDisplay = () => {
         )
     }
 
-    // Limit to 15 jobs (3x5 grid)
-    const displayJobs = jobs.slice(0, 15)
-
     return (
         <div className="job-display">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -84,7 +81,7 @@ const JobDisplay = () => {
 
                 {/* Jobs Grid - 3 columns, responsive */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {!isLoading && displayJobs.map((job) => (
+                    {!isLoading && jobs.map((job) => (
                         <JobCard
                             key={job.id}
                             job={job}
