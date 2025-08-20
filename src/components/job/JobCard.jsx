@@ -1,6 +1,7 @@
 
 import { Heart, Building2 } from 'lucide-react';
 import { Tag, Button } from 'antd';
+import { NavLink } from 'react-router';
 
 const JobCard = ({ job }) => {
     if (!job) return null
@@ -27,27 +28,24 @@ const JobCard = ({ job }) => {
     }
 
     return (
-        <div className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+        <NavLink to={`/jobs/${job.id}`} className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
             <div className='px-3 py-3'>
-                <div className="job-header flex gap-3 justify-between items-start">
-                    <div className="flex gap-3">
-                        <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
-                            {job.company?.logo ? (
-                                <img
-                                    src={job.company.logo}
-                                    alt={`${job.company.name} logo`}
-                                    className="w-10 h-10 object-cover rounded-lg"
-                                />
-                            ) : (
-                                <Building2 className="w-6 h-6 text-black" />
-                            )}
-                        </div>
-                        <div className="job-name">
-                            <p className='font-bold'>{job.title}</p>
-                            <p className='text-sm text-gray-600'>{job.company.name}</p>
-                        </div>
+                <div className="job-header flex gap-3 items-start">
+                    <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                        {job.company?.logo ? (
+                            <img
+                                src={job.company.logo}
+                                alt={`${job.company.name} logo`}
+                                className="w-10 h-10 object-cover rounded-lg"
+                            />
+                        ) : (
+                            <Building2 className="w-6 h-6 text-black" />
+                        )}
                     </div>
-                    <Button shape="circle" icon={<Heart className='w-4' />} />
+                    <div className="job-name">
+                        <p className='font-bold'>{job.title}</p>
+                        <p className='text-sm text-gray-600'>{job.company.name}</p>
+                    </div>
                 </div>
                 <div className="job-info mt-2 flex justify-between">
                     <div className="info">
@@ -57,7 +55,7 @@ const JobCard = ({ job }) => {
                     <p className='text-sm text-gray-600'>{getDaysAgo(job.createdAt)}</p>
                 </div>
             </div>
-        </div>
+        </NavLink>
     )
 }
 

@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { NavLink } from "react-router"
+import { useState, useEffect } from "react"
+import { NavLink, useNavigate } from "react-router"
 import Button from "../../components/ui/button"
 import { Check, Eye, EyeOff } from 'lucide-react'
 import Divider from "../../components/login/Divider"
 import PasswordInput from "../../components/login/PasswordInput"
 import FormInput from "../../components/login/FormInput"
+import { useAuth } from "../../providers/AuthProvider"
 
 const GOOGLE_LOGO_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png"
 
@@ -40,26 +41,54 @@ const LoginPage = () => {
     })
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState('')
+
+    const { login, isAuthenticated, loading } = useAuth()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!loading && isAuthenticated) {
+            navigate('/')
+        }
+    }, [isAuthenticated, loading, navigate])
 
     const handleInputChange = (field) => (e) => {
         setFormData(prev => ({
             ...prev,
             [field]: e.target.value
         }))
+        // Clear error when user starts typing
+        if (error) setError('')
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
+        setError('')
 
         try {
-            // TODO: Implement authentication logic
-            console.log('Login attempt:', formData)
+            await login(formData.email, formData.password)
+            console.log('Login successful')
+            // Redirect to home page after successful login
+            navigate('/')
         } catch (error) {
             console.error('Login error:', error)
+            setError('Invalid email or password. Please try again.')
         } finally {
             setIsLoading(false)
         }
+    }
+
+    // Show loading while checking authentication status
+    if (loading) {
+        return (
+            <div className="bg-gray-50 min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                    <p className="mt-2 text-gray-600">Loading...</p>
+                </div>
+            </div>
+        )
     }
 
     const handleGoogleSignIn = () => {
@@ -124,6 +153,13 @@ const LoginPage = () => {
                                     showPassword={showPassword}
                                     toggleShowPassword={() => setShowPassword(!showPassword)}
                                 />
+
+                                {/* Error Message */}
+                                {error && (
+                                    <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+                                        {error}
+                                    </div>
+                                )}
 
                                 <Button
                                     type="submit"

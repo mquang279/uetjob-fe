@@ -1,4 +1,5 @@
 import { NavLink } from "react-router"
+import { useAuth } from "../../providers/AuthProvider"
 
 const NAV_ITEMS = [
     { name: 'All Jobs', link: '/' },
@@ -8,6 +9,16 @@ const NAV_ITEMS = [
 ]
 
 const Header = () => {
+    const { isAuthenticated, user, logout } = useAuth()
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+        } catch (error) {
+            console.error('Logout error:', error)
+        }
+    }
+
     return (
         <div className="header w-full">
             <div className="sticky top-0 bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full h-[70px] flex justify-between items-center px-[30px] border-b-[0.5px] border-gray-600">
@@ -25,7 +36,25 @@ const Header = () => {
                 </div>
                 <div className="header-action flex items-center text-nowrap font-medium gap-8 flex-shrink-0">
                     <NavLink to="/employers" className="hover:underline cursor-pointer">For Employers</NavLink>
-                    <NavLink to="/login" className="w-full hover:underline cursor-pointer">Sign in/Sign up</NavLink>
+                    {!isAuthenticated &&
+                        <NavLink to="/login" className="w-full hover:underline cursor-pointer">Sign in/Sign up</NavLink>
+                    }
+                    {isAuthenticated && user && (
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-semibold">
+                                    {user.username?.charAt(0).toUpperCase() || 'U'}
+                                </div>
+                                <span className="text-white">{user.username || user.email}</span>
+                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="hover:underline cursor-pointer text-white"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
