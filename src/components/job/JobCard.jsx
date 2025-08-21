@@ -1,7 +1,7 @@
 
 import { Heart, Building2 } from 'lucide-react';
-import { Tag, Button } from 'antd';
 import { NavLink } from 'react-router';
+import { useState } from 'react';
 
 
 const CardInfo = ({ children }) => {
@@ -13,6 +13,8 @@ const CardInfo = ({ children }) => {
 }
 
 const JobCard = ({ job }) => {
+    const [like, setLike] = useState(false)
+
     if (!job) return null
 
     const formatSalary = (min, max) => {
@@ -37,10 +39,10 @@ const JobCard = ({ job }) => {
     }
 
     return (
-        <NavLink to={`/jobs/${job.id}`} className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+        <div className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
             <div className='px-3 py-3'>
                 <div className="job-header flex gap-3 items-start">
-                    <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
+                    <NavLink to={`/jobs/${job.id}`} className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg">
                         {job.company?.logo ? (
                             <img
                                 src={job.company.logo}
@@ -50,11 +52,14 @@ const JobCard = ({ job }) => {
                         ) : (
                             <Building2 className="w-6 h-6 text-black" />
                         )}
+                    </NavLink>
+                    <div className="job-name flex-1">
+                        <NavLink to={`/jobs/${job.id}`} className='font-bold block'>{job.title}</NavLink>
+                        <NavLink to={`/companies/${job.company.id}`} className='text-sm text-gray-600 block'>{job.company.name}</NavLink>
                     </div>
-                    <div className="job-name">
-                        <p className='font-bold'>{job.title}</p>
-                        <p className='text-sm text-gray-600'>{job.company.name}</p>
-                    </div>
+                    <button className='border-1 px-1 rounded-2xl text-red-500 hover:bg-red-100' onClick={() => setLike(!like)}>
+                        <Heart className={`w-4 ${like ? 'fill-red-500' : ''}`} />
+                    </button>
                 </div>
                 <div className="job-info mt-2 flex justify-between">
                     <div className="info flex gap-2">
@@ -64,7 +69,7 @@ const JobCard = ({ job }) => {
                     <p className='text-sm text-gray-600'>{getDaysAgo(job.createdAt)}</p>
                 </div>
             </div>
-        </NavLink>
+        </div>
     )
 }
 
