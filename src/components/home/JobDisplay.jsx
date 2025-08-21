@@ -1,7 +1,7 @@
 import JobCard from '../job/JobCard'
 import { useGetAllJobs } from '../../hooks/job/useGetAllJobs'
 import { useJobsCount } from '../../hooks/job/useJobsCount'
-import { Pagination } from 'antd';
+import { ConfigProvider, Pagination } from 'antd';
 import { useState } from 'react';
 
 const JobDisplay = () => {
@@ -92,14 +92,22 @@ const JobDisplay = () => {
                 {/* Show more indicator if there are more than 15 jobs */}
                 {!isLoading && jobCount > 9 && (
                     <div className='mt-4'>
-                        <Pagination
-                            align="center"
-                            current={page}
-                            onChange={(newPage) => setPage(newPage)}
-                            total={jobCount}
-                            pageSize={pageSize}
-                            showSizeChanger={false}
-                        />
+                        <ConfigProvider
+                            theme={{
+                                token: {
+                                    colorPrimary: 'black',
+                                },
+                            }}
+                        >
+                            <Pagination
+                                align="center"
+                                current={page}
+                                onChange={(newPage) => setPage(newPage)}
+                                total={jobCount}
+                                pageSize={pageSize}
+                                showSizeChanger={false}
+                            />
+                        </ConfigProvider>
                     </div>
                 )}
             </div>
