@@ -20,9 +20,17 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const response = await AuthService.fetchUserInfo()
-            setUser(response.user)
-            setToken(response.accessToken)
+            try {
+                const response = await AuthService.fetchUserInfo()
+                setUser(response.user)
+                setToken(response.accessToken)
+                localStorage.setItem('token', response.accessToken)
+            } catch (error) {
+                console.log('User not authenticated:', error.response?.status)
+                setToken(null)
+                setUser(null)
+                localStorage.removeItem('token')
+            }
         }
         fetchUserData()
     }, [])

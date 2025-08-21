@@ -3,6 +3,15 @@ import { Heart, Building2 } from 'lucide-react';
 import { Tag, Button } from 'antd';
 import { NavLink } from 'react-router';
 
+
+const CardInfo = ({ children }) => {
+    return (
+        <span className="card-info text-xs py-1.5 px-1.5 rounded-2xl bg-gray-200">
+            {children}
+        </span>
+    )
+}
+
 const JobCard = ({ job }) => {
     if (!job) return null
 
@@ -48,9 +57,9 @@ const JobCard = ({ job }) => {
                     </div>
                 </div>
                 <div className="job-info mt-2 flex justify-between">
-                    <div className="info">
-                        <Tag color="green">{formatSalary(job.minSalary, job.maxSalary)}</Tag>
-                        <Tag>{job.location}</Tag>
+                    <div className="info flex gap-2">
+                        <CardInfo>{formatSalary(job.minSalary, job.maxSalary)}</CardInfo>
+                        <CardInfo>{job.location}</CardInfo>
                     </div>
                     <p className='text-sm text-gray-600'>{getDaysAgo(job.createdAt)}</p>
                 </div>

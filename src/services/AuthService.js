@@ -23,12 +23,12 @@ export const AuthService = {
     },
 
     fetchUserInfo: async () => {
-        try {
-            const response = await axiosClient.get('/auth/account')
-            return response.data
-        } catch (error) {
-            console.log('User are not authenticated')
-            throw error
-        }
+        const response = await axiosClient.get('/auth/account')
+        return response.data
+    },
+
+    sendRefreshToken: async () => {
+        const response = await axiosClient.get('/auth/refresh')
+        return response.data
     }
 }
