@@ -19,10 +19,19 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState()
     const [user, setUser] = useState(null)
 
-    const updateToken = (newToken) => {
+    const updateToken = async (newToken) => {
         setToken(newToken)
         if (newToken) {
             localStorage.setItem('token', newToken)
+            try {
+                const response = await AuthService.fetchUserInfo()
+                setUser(response.user)
+            } catch (error) {
+                console.error('Failed to fetch user info after token refresh:', error)
+                setToken(null)
+                setUser(null)
+                localStorage.removeItem('token')
+            }
         } else {
             localStorage.removeItem('token')
             setUser(null)
@@ -30,15 +39,21 @@ const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        // Set the callback for axios to update auth context
         setUpdateTokenCallback(updateToken)
 
         const fetchUserData = async () => {
+            const existingToken = localStorage.getItem('token')
+            if (existingToken) {
+                setToken(existingToken)
+            }
+
             try {
                 const response = await AuthService.fetchUserInfo()
                 setUser(response.user)
-                setToken(response.accessToken)
-                localStorage.setItem('token', response.accessToken)
+                if (response.accessToken) {
+                    setToken(response.accessToken)
+                    localStorage.setItem('token', response.accessToken)
+                }
             } catch (error) {
                 console.log('User not authenticated:', error.response?.status)
                 setToken(null)
@@ -51,6 +66,7 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const response = await AuthService.login(email, password)
+        console.log('Login response:', response)
         setToken(response.accessToken)
         setUser(response.user)
         localStorage.setItem('token', response.accessToken)

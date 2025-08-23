@@ -9,7 +9,7 @@ const useJobsCount = () => {
       const { data } = await axiosClient.get(`${API_BASE_URL}/jobs/count`)
       return data
     },
-    staleTime: 1000 * 60 * 60
+    staleTime: 10 * 60 * 60
   })
 };
 

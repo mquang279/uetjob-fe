@@ -85,9 +85,7 @@ axiosClient.interceptors.response.use(
                 try {
                     console.log('Token expired, attempting to refresh...');
                     const data = await AuthService.sendRefreshToken();
-                    console.log(data.accessToken);
-
-                    if (data.accessToken) {
+                    console.log(data.accessToken); if (data.accessToken) {
                         localStorage.setItem('token', data.accessToken);
                         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
 
