@@ -1,7 +1,7 @@
 import JobCard from '../job/JobCard'
 import { useGetAllJobs } from '../../hooks/job/useGetAllJobs'
 import { useJobsCount } from '../../hooks/job/useJobsCount'
-import { Pagination } from 'antd';
+import { ConfigProvider, Pagination } from 'antd';
 import { useState } from 'react';
 
 const JobDisplay = () => {
@@ -61,11 +61,8 @@ const JobDisplay = () => {
         )
     }
 
-    // Limit to 15 jobs (3x5 grid)
-    const displayJobs = jobs.slice(0, 15)
-
     return (
-        <div className="job-display">
+        <div className="job-display" style={{ backgroundColor: 'rgb(243, 245, 247)' }}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 {!isLoading && jobs.length > 0 && (
@@ -84,7 +81,7 @@ const JobDisplay = () => {
 
                 {/* Jobs Grid - 3 columns, responsive */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {!isLoading && displayJobs.map((job) => (
+                    {!isLoading && jobs.map((job) => (
                         <JobCard
                             key={job.id}
                             job={job}
@@ -95,14 +92,22 @@ const JobDisplay = () => {
                 {/* Show more indicator if there are more than 15 jobs */}
                 {!isLoading && jobCount > 9 && (
                     <div className='mt-4'>
-                        <Pagination
-                            align="center"
-                            current={page}
-                            onChange={(newPage) => setPage(newPage)}
-                            total={jobCount}
-                            pageSize={pageSize}
-                            showSizeChanger={false}
-                        />
+                        <ConfigProvider
+                            theme={{
+                                token: {
+                                    colorPrimary: 'black',
+                                },
+                            }}
+                        >
+                            <Pagination
+                                align="center"
+                                current={page}
+                                onChange={(newPage) => setPage(newPage)}
+                                total={jobCount}
+                                pageSize={pageSize}
+                                showSizeChanger={false}
+                            />
+                        </ConfigProvider>
                     </div>
                 )}
             </div>
