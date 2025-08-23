@@ -9,6 +9,11 @@ const noAuthEndpoints = [
 
 let isRefreshing = false;
 let failedQueue = [];
+let updateTokenCallback = null;
+
+export const setUpdateTokenCallback = (callback) => {
+    updateTokenCallback = callback;
+};
 
 const processQueue = (error, token = null) => {
     failedQueue.forEach(prom => {
@@ -85,12 +90,24 @@ axiosClient.interceptors.response.use(
                     if (data.accessToken) {
                         localStorage.setItem('token', data.accessToken);
                         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+
+                        // Update auth context if callback is available
+                        if (updateTokenCallback) {
+                            updateTokenCallback(data.accessToken);
+                        }
+
                         processQueue(null, data.accessToken);
                         return axiosClient(originalRequest);
                     }
                 } catch (refreshError) {
                     console.error('Token refresh failed:', refreshError);
                     localStorage.removeItem('token');
+
+                    // Clear auth context if callback is available
+                    if (updateTokenCallback) {
+                        updateTokenCallback(null);
+                    }
+
                     processQueue(refreshError, null);
                     return Promise.reject(refreshError);
                 } finally {

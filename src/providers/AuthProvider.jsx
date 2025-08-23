@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_BASE_URL } from "../constants/constant";
 import { AuthService } from "../services/AuthService";
+import { setUpdateTokenCallback } from "../utils/axiosClient";
 
 const AuthContext = createContext(undefined)
 
@@ -18,7 +19,20 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState()
     const [user, setUser] = useState(null)
 
+    const updateToken = (newToken) => {
+        setToken(newToken)
+        if (newToken) {
+            localStorage.setItem('token', newToken)
+        } else {
+            localStorage.removeItem('token')
+            setUser(null)
+        }
+    }
+
     useEffect(() => {
+        // Set the callback for axios to update auth context
+        setUpdateTokenCallback(updateToken)
+
         const fetchUserData = async () => {
             try {
                 const response = await AuthService.fetchUserInfo()
@@ -55,6 +69,7 @@ const AuthProvider = ({ children }) => {
         user,
         login,
         logout,
+        updateToken,
         isAuthenticated: !!token
     }
 
