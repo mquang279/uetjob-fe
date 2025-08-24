@@ -39,7 +39,15 @@ const Sidebar = () => {
             <Sider
                 breakpoint="lg"
                 collapsedWidth="0"
-                style={{ height: '100vh' }}
+                style={{
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    zIndex: 1000,
+                    height: '100vh',
+                    overflow: 'auto'
+                }}
                 onBreakpoint={broken => {
                     console.log(broken);
                 }}
