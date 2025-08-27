@@ -1,11 +1,12 @@
-import { Button, Modal, Table, Form, Input, Select, DatePicker, InputNumber, Switch } from "antd"
-import { Plus } from 'lucide-react';
+import { Button, Modal, Table, Form, Input, Select, DatePicker, InputNumber, Switch, notification } from "antd"
+import { Plus, Pen, Trash } from 'lucide-react';
 import { useGetAllJobs } from "../../hooks/job/useGetAllJobs";
 import { useEffect, useState } from "react";
 import { useJobsCount } from "../../hooks/job/useJobsCount";
 import { useGetAllCompanies } from "../../hooks/company/useGetAllCompanies";
 import { useCreateJob } from "../../hooks/job/useCreateJob";
 import { ConfigProvider, Pagination } from 'antd';
+import useDeleteJob from "../../hooks/job/useDeleteJob";
 
 const AdminJobsPage = () => {
     const pageSize = 10
@@ -14,15 +15,16 @@ const AdminJobsPage = () => {
     const { data: jobCount } = useJobsCount()
     const { data } = useGetAllJobs({ page: page - 1, pageSize })
     const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
-    const [form] = Form.useForm();
-    const createJobMutation = useCreateJob();
+    const [form] = Form.useForm()
+    const createJobMutation = useCreateJob()
+    const deleteJobMutation = useDeleteJob()
+
+    const dataSource = data?.content || []
+    const companies = companiesData?.content || []
 
     useEffect(() => {
         console.log(showModal)
     }, [showModal])
-
-    const dataSource = data?.content || []
-    const companies = companiesData?.content || []
 
     const columns = [
         {
@@ -42,10 +44,10 @@ const AdminJobsPage = () => {
             key: 'location',
         },
         {
-            title: 'Start date',
-            dataIndex: 'startDate',
-            key: 'startDate',
-            render: (startDate) => startDate ? new Date(startDate).toLocaleDateString() : 'N/A'
+            title: 'Add date',
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (createdAt) => createdAt ? new Date(createdAt).toLocaleDateString() : 'N/A'
         },
         {
             title: 'End date',
@@ -64,7 +66,25 @@ const AdminJobsPage = () => {
                 </span>
             )
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+                <div className="flex gap-2 w-11">
+                    <Pen className="text-blue-500 cursor-pointer" onClick={() => console.log(record)} />
+                    <Trash className="text-red-500 cursor-pointer" onClick={() => handleDeleteJob({ companyId: record.company.id, jobId: record.id })} />
+                </div>
+            ),
+        }
     ];
+
+    const handleDeleteJob = async ({ companyId, jobId }) => {
+        try {
+            await deleteJobMutation.mutateAsync({ companyId, jobId })
+        } catch {
+            console.log('Delete Job Error')
+        }
+    }
 
     const handleCreateJob = async () => {
         try {
@@ -77,7 +97,7 @@ const AdminJobsPage = () => {
             setShowModal(false);
             form.resetFields();
         } catch {
-            // Validation failed or mutation error
+            console.log('Add Job Error')
         }
     };
 
@@ -199,27 +219,15 @@ const AdminJobsPage = () => {
                         </Form.Item>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <Form.Item
-                            name="startDate"
-                            label="Start Date"
-                        >
-                            <DatePicker
-                                className="w-full"
-                                format="YYYY-MM-DD"
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="endDate"
-                            label="End Date"
-                        >
-                            <DatePicker
-                                className="w-full"
-                                format="YYYY-MM-DD"
-                            />
-                        </Form.Item>
-                    </div>
+                    <Form.Item
+                        name="endDate"
+                        label="End Date"
+                    >
+                        <DatePicker
+                            className="w-full"
+                            format="YYYY-MM-DD"
+                        />
+                    </Form.Item>
 
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
@@ -248,13 +256,7 @@ const AdminJobsPage = () => {
                         </Form.Item>
                     </div>
 
-                    <Form.Item
-                        name="active"
-                        label="Active Status"
-                        valuePropName="checked"
-                    >
-                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
-                    </Form.Item>
+
                 </Form>
             </Modal>
         </>
