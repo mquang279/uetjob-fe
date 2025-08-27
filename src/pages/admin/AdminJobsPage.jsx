@@ -9,6 +9,7 @@ import { ConfigProvider, Pagination } from 'antd';
 import useDeleteJob from "../../hooks/job/useDeleteJob";
 
 const AdminJobsPage = () => {
+    const [api, contextHolder] = notification.useNotification()
     const pageSize = 10
     const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
@@ -25,6 +26,17 @@ const AdminJobsPage = () => {
     useEffect(() => {
         console.log(showModal)
     }, [showModal])
+
+    const openNotification = (type, message, description) => {
+        console.log('Open notification')
+        api.open({
+            message: message,
+            description: description,
+            type: type || 'info',
+            showProgress: true,
+            pauseOnHover: true,
+        });
+    };
 
     const columns = [
         {
@@ -71,18 +83,20 @@ const AdminJobsPage = () => {
             key: 'action',
             render: (_, record) => (
                 <div className="flex gap-2 w-11">
-                    <Pen className="text-blue-500 cursor-pointer" onClick={() => console.log(record)} />
+                    <Pen className="text-blue-500 cursor-pointer" onClick={() => console.log('Edit job')} />
                     <Trash className="text-red-500 cursor-pointer" onClick={() => handleDeleteJob({ companyId: record.company.id, jobId: record.id })} />
                 </div>
             ),
         }
-    ];
+    ]
 
     const handleDeleteJob = async ({ companyId, jobId }) => {
         try {
             await deleteJobMutation.mutateAsync({ companyId, jobId })
+            openNotification('success', 'Job Deleted', 'The job has been successfully deleted.')
         } catch {
             console.log('Delete Job Error')
+            openNotification('error', 'Delete Failed', 'Failed to delete the job. Please try again.')
         }
     }
 
@@ -103,6 +117,7 @@ const AdminJobsPage = () => {
 
     return (
         <>
+            {contextHolder}
             <div className="p-6">
                 <div className="flex justify-between">
                     <h1 className="text-2xl font-bold mb-4">Jobs Management</h1>
