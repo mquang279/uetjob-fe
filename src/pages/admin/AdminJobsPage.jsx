@@ -7,18 +7,23 @@ import { useGetAllCompanies } from "../../hooks/company/useGetAllCompanies";
 import { useCreateJob } from "../../hooks/job/useCreateJob";
 import { ConfigProvider, Pagination } from 'antd';
 import useDeleteJob from "../../hooks/job/useDeleteJob";
+import dayjs from 'dayjs';
+import { useUpdateJob } from "../../hooks/job/useUpdateJob";
 
 const AdminJobsPage = () => {
     const [api, contextHolder] = notification.useNotification()
     const pageSize = 10
     const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
     const { data: jobCount } = useJobsCount()
+    const [currentJob, setCurrentJob] = useState(null)
     const { data } = useGetAllJobs({ page: page - 1, pageSize })
     const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
     const [form] = Form.useForm()
     const createJobMutation = useCreateJob()
     const deleteJobMutation = useDeleteJob()
+    const updateJobMutation = useUpdateJob()
 
     const dataSource = data?.content || []
     const companies = companiesData?.content || []
@@ -26,6 +31,36 @@ const AdminJobsPage = () => {
     useEffect(() => {
         console.log(showModal)
     }, [showModal])
+
+    useEffect(() => {
+        if (isEdit && currentJob && showModal) {
+            form.setFieldsValue({
+                title: currentJob.title,
+                companyId: currentJob.company.id,
+                location: currentJob.location,
+                description: currentJob.description,
+                minSalary: currentJob.minSalary,
+                maxSalary: currentJob.maxSalary,
+                endDate: currentJob.endDate ? dayjs(currentJob.endDate) : null,
+                quantity: currentJob.quantity,
+                level: currentJob.level,
+                active: currentJob.active
+            });
+        } else if (!isEdit && showModal) {
+            form.setFieldsValue({
+                title: '',
+                companyId: undefined,
+                location: '',
+                description: '',
+                minSalary: undefined,
+                maxSalary: undefined,
+                endDate: null,
+                quantity: 1,
+                level: 'FRESHER',
+                active: true
+            });
+        }
+    }, [isEdit, currentJob, showModal, form])
 
     const openNotification = (type, message, description) => {
         console.log('Open notification')
@@ -83,7 +118,7 @@ const AdminJobsPage = () => {
             key: 'action',
             render: (_, record) => (
                 <div className="flex gap-2 w-11">
-                    <Pen className="text-blue-500 cursor-pointer" onClick={() => console.log('Edit job')} />
+                    <Pen className="text-blue-500 cursor-pointer" onClick={() => { setIsEdit(true); setCurrentJob(record); setShowModal(true) }} />
                     <Trash className="text-red-500 cursor-pointer" onClick={() => handleDeleteJob({ companyId: record.company.id, jobId: record.id })} />
                 </div>
             ),
@@ -100,20 +135,24 @@ const AdminJobsPage = () => {
         }
     }
 
-    const handleCreateJob = async () => {
+    const handleSubmit = async () => {
         try {
-            const values = await form.validateFields();
-            if (values.startDate) values.startDate = values.startDate.format("YYYY-MM-DD HH:mm:ss");
-            if (values.endDate) values.endDate = values.endDate.format("YYYY-MM-DD HH:mm:ss");
+            const values = await form.validateFields()
+            if (values.startDate) values.startDate = values.startDate.format("YYYY-MM-DD HH:mm:ss")
+            if (values.endDate) values.endDate = values.endDate.format("YYYY-MM-DD HH:mm:ss")
 
-            const { companyId, ...jobData } = values;
-            await createJobMutation.mutateAsync({ companyId, jobData });
-            setShowModal(false);
-            form.resetFields();
+            const { companyId, ...jobData } = values
+            if (isEdit) {
+                await updateJobMutation.mutateAsync({ companyId, jobId: currentJob.id, jobData })
+            } else {
+                await createJobMutation.mutateAsync({ companyId, jobData })
+            }
+            setShowModal(false)
+            form.resetFields()
         } catch {
-            console.log('Add Job Error')
+            console.log('Submit Job Error')
         }
-    };
+    }
 
     return (
         <>
@@ -121,7 +160,11 @@ const AdminJobsPage = () => {
             <div className="p-6">
                 <div className="flex justify-between">
                     <h1 className="text-2xl font-bold mb-4">Jobs Management</h1>
-                    <Button type="primary" onClick={() => setShowModal(true)}>
+                    <Button type="primary" onClick={() => {
+                        setIsEdit(false);
+                        setCurrentJob(null);
+                        setShowModal(true);
+                    }}>
                         <Plus className="w-4" />
                         <p className="font-bold">Job</p>
                     </Button>
@@ -154,19 +197,21 @@ const AdminJobsPage = () => {
                 </div>
             </div>
             <Modal
-                title="Add a new job"
+                title={isEdit ? "Edit job information" : "Add a new job"}
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={showModal}
-                onCancel={() => { setShowModal(false); form.resetFields(); }}
-                onOk={handleCreateJob}
+                onCancel={() => {
+                    setShowModal(false);
+                    form.resetFields();
+                    if (isEdit) {
+                        setIsEdit(false);
+                        setCurrentJob(null);
+                    }
+                }}
+                onOk={handleSubmit}
             >
                 <Form
                     form={form}
-                    initialValues={{
-                        active: true,
-                        quantity: 1,
-                        level: 'FRESHER'
-                    }}
                 >
                     <Form.Item
                         name="title"
@@ -270,8 +315,6 @@ const AdminJobsPage = () => {
                             </Select>
                         </Form.Item>
                     </div>
-
-
                 </Form>
             </Modal>
         </>
