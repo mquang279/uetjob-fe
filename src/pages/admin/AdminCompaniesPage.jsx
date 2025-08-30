@@ -154,7 +154,7 @@ const AdminCompaniesPage = () => {
                         setShowModal(true);
                     }}>
                         <Plus className="w-4" />
-                        <p className="font-bold">Job</p>
+                        <p className="font-bold">Company</p>
                     </Button>
                 </div>
                 <div className="bg-white rounded-lg shadow p-6">
@@ -185,7 +185,7 @@ const AdminCompaniesPage = () => {
                 </div>
             </div>
             <Modal
-                title={isEdit ? "Edit job information" : "Add a new job"}
+                title={isEdit ? "Edit company information" : "Add a new company"}
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={showModal}
                 onCancel={() => {
@@ -202,107 +202,32 @@ const AdminCompaniesPage = () => {
                     form={form}
                 >
                     <Form.Item
-                        name="title"
+                        name="name"
                         layout="vertical"
-                        label="Title"
+                        label="Name"
                         rules={[{ required: true, message: 'Please select a company!' }]}
                     >
-                        <Input placeholder="Enter job title" />
+                        <Input placeholder="Enter company name" />
                     </Form.Item>
 
                     <Form.Item
-                        name="companyId"
-                        label="Company"
-                        rules={[{ required: true, message: 'Please select a company!' }]}
+                        name="address"
+                        label="Address"
+                        rules={[{ required: true, message: 'Please input the address!' }]}
                     >
-                        <Select placeholder="Select a company">
-                            {companies.map(company => (
-                                <Select.Option key={company.id} value={company.id}>
-                                    {company.name}
-                                </Select.Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item
-                        name="location"
-                        label="Location"
-                        rules={[{ required: true, message: 'Please input the location!' }]}
-                    >
-                        <Input placeholder="Enter job location" />
+                        <Input placeholder="Enter company address" />
                     </Form.Item>
 
                     <Form.Item
                         name="description"
                         label="Description"
-                        rules={[{ required: true, message: 'Please input the job description!' }]}
+                        rules={[{ required: true, message: 'Please input the company description!' }]}
                     >
                         <Input.TextArea
                             rows={4}
-                            placeholder="Enter job description"
+                            placeholder="Enter company description"
                         />
                     </Form.Item>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Form.Item
-                            name="minSalary"
-                            label="Minimum Salary"
-                        >
-                            <InputNumber
-                                placeholder="Min salary"
-                                className="w-full"
-                                min={0}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="maxSalary"
-                            label="Maximum Salary"
-                        >
-                            <InputNumber
-                                placeholder="Max salary"
-                                className="w-full"
-                                min={0}
-                            />
-                        </Form.Item>
-                    </div>
-
-                    <Form.Item
-                        name="endDate"
-                        label="End Date"
-                    >
-                        <DatePicker
-                            className="w-full"
-                            format="YYYY-MM-DD"
-                        />
-                    </Form.Item>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Form.Item
-                            name="quantity"
-                            label="Number of Positions"
-                        >
-                            <InputNumber
-                                placeholder="Quantity"
-                                className="w-full"
-                                min={1}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="level"
-                            label="Job Level"
-                        >
-                            <Select placeholder="Select job level">
-                                <Select.Option value="INTERN">Intern</Select.Option>
-                                <Select.Option value="FRESHER">Fresher</Select.Option>
-                                <Select.Option value="JUNIOR">Junior</Select.Option>
-                                <Select.Option value="MIDDLE">Middle</Select.Option>
-                                <Select.Option value="SENIOR">Senior</Select.Option>
-                                <Select.Option value="LEAD">Lead</Select.Option>
-                            </Select>
-                        </Form.Item>
-                    </div>
                 </Form>
             </Modal>
         </>
