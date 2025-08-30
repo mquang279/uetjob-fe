@@ -1,14 +1,12 @@
-import { Button, Modal, Table, Form, Input, Select, DatePicker, InputNumber, Switch, notification } from "antd"
+import { Button, Modal, Table, Form, Input, notification } from "antd"
 import { Plus, Pen, Trash } from 'lucide-react';
-import { useGetAllJobs } from "../../hooks/job/useGetAllJobs";
 import { useEffect, useState } from "react";
 import { useJobsCount } from "../../hooks/job/useJobsCount";
 import { useGetAllCompanies } from "../../hooks/company/useGetAllCompanies";
-import { useCreateJob } from "../../hooks/job/useCreateJob";
 import { ConfigProvider, Pagination } from 'antd';
-import useDeleteJob from "../../hooks/job/useDeleteJob";
-import dayjs from 'dayjs';
-import { useUpdateJob } from "../../hooks/job/useUpdateJob";
+import { useCreateCompany } from "../../hooks/company/useCreateCompany";
+import { useUpdateCompany } from "../../hooks/company/useUpdateCompany";
+import useDeleteCompany from "../../hooks/company/useDeleteCompany";
 
 const AdminCompaniesPage = () => {
     const [api, contextHolder] = notification.useNotification()
@@ -17,50 +15,25 @@ const AdminCompaniesPage = () => {
     const [showModal, setShowModal] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const { data: jobCount } = useJobsCount()
-    const [currentJob, setCurrentJob] = useState(null)
-    const { data } = useGetAllJobs({ page: page - 1, pageSize })
+    const [currentCompany, setCurrentCompany] = useState(null)
     const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
     const [form] = Form.useForm()
-    const createJobMutation = useCreateJob()
-    const deleteJobMutation = useDeleteJob()
-    const updateJobMutation = useUpdateJob()
+    const createCompanyMutation = useCreateCompany()
+    const deleteCompanyMutation = useDeleteCompany()
+    const updateCompanyMutation = useUpdateCompany()
 
     const dataSource = companiesData?.content || []
-    const companies = companiesData?.content || []
 
     useEffect(() => {
-        console.log(showModal)
-    }, [showModal])
-
-    useEffect(() => {
-        if (isEdit && currentJob && showModal) {
+        if (isEdit && currentCompany && showModal) {
             form.setFieldsValue({
-                title: currentJob.title,
-                companyId: currentJob.company.id,
-                location: currentJob.location,
-                description: currentJob.description,
-                minSalary: currentJob.minSalary,
-                maxSalary: currentJob.maxSalary,
-                endDate: currentJob.endDate ? dayjs(currentJob.endDate) : null,
-                quantity: currentJob.quantity,
-                level: currentJob.level,
-                active: currentJob.active
-            });
-        } else if (!isEdit && showModal) {
-            form.setFieldsValue({
-                title: '',
-                companyId: undefined,
-                location: '',
-                description: '',
-                minSalary: undefined,
-                maxSalary: undefined,
-                endDate: null,
-                quantity: 1,
-                level: 'FRESHER',
-                active: true
+                name: currentCompany.name,
+                email: currentCompany.email,
+                address: currentCompany.address,
+                description: currentCompany.description
             });
         }
-    }, [isEdit, currentJob, showModal, form])
+    }, [isEdit, currentCompany, showModal, form])
 
     const openNotification = (type, message, description) => {
         console.log('Open notification')
@@ -106,34 +79,33 @@ const AdminCompaniesPage = () => {
             key: 'action',
             render: (_, record) => (
                 <div className="flex gap-2 w-11">
-                    <Pen className="text-blue-500 cursor-pointer" onClick={() => { setIsEdit(true); setCurrentJob(record); setShowModal(true) }} />
-                    <Trash className="text-red-500 cursor-pointer" onClick={() => handleDeleteJob({ companyId: record.company.id, jobId: record.id })} />
+                    <Pen className="text-blue-500 cursor-pointer" onClick={() => { setIsEdit(true); setCurrentCompany(record); setShowModal(true) }} />
+                    <Trash className="text-red-500 cursor-pointer" onClick={() => handleDelete(record.id)} />
                 </div>
             ),
         }
     ]
 
-    const handleDeleteJob = async ({ companyId, jobId }) => {
+    const handleDelete = async (id) => {
         try {
-            await deleteJobMutation.mutateAsync({ companyId, jobId })
-            openNotification('success', 'Job Deleted', 'The job has been successfully deleted.')
+            await deleteCompanyMutation.mutateAsync(id)
+            openNotification('success', 'Company Deleted', 'The company has been successfully deleted.')
         } catch {
-            console.log('Delete Job Error')
-            openNotification('error', 'Delete Failed', 'Failed to delete the job. Please try again.')
+            console.log('Delete Company Error')
+            openNotification('error', 'Delete Failed', 'Failed to delete the company. Please try again.')
         }
     }
 
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields()
-            if (values.startDate) values.startDate = values.startDate.format("YYYY-MM-DD HH:mm:ss")
-            if (values.endDate) values.endDate = values.endDate.format("YYYY-MM-DD HH:mm:ss")
-
-            const { companyId, ...jobData } = values
+            console.log(values)
             if (isEdit) {
-                await updateJobMutation.mutateAsync({ companyId, jobId: currentJob.id, jobData })
+                await updateCompanyMutation.mutateAsync({ companyId: currentCompany.id, companyData: values })
+                openNotification('success', 'Company Modified', 'Company information has been successfully modified.')
             } else {
-                await createJobMutation.mutateAsync({ companyId, jobData })
+                await createCompanyMutation.mutateAsync(values)
+                openNotification('success', 'Company Created', 'The company has been successfully added.')
             }
             setShowModal(false)
             form.resetFields()
@@ -150,7 +122,7 @@ const AdminCompaniesPage = () => {
                     <h1 className="text-2xl font-bold mb-4">Companies Management</h1>
                     <Button type="primary" onClick={() => {
                         setIsEdit(false);
-                        setCurrentJob(null);
+                        setCurrentCompany(null);
                         setShowModal(true);
                     }}>
                         <Plus className="w-4" />
@@ -193,7 +165,7 @@ const AdminCompaniesPage = () => {
                     form.resetFields();
                     if (isEdit) {
                         setIsEdit(false);
-                        setCurrentJob(null);
+                        setCurrentCompany(null);
                     }
                 }}
                 onOk={handleSubmit}
@@ -208,6 +180,14 @@ const AdminCompaniesPage = () => {
                         rules={[{ required: true, message: 'Please select a company!' }]}
                     >
                         <Input placeholder="Enter company name" />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="email"
+                        label="Email"
+                        rules={[{ required: true, message: 'Please input the email!' }]}
+                    >
+                        <Input placeholder="Enter company email" />
                     </Form.Item>
 
                     <Form.Item
