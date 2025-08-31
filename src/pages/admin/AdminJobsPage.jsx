@@ -227,7 +227,13 @@ const AdminJobsPage = () => {
                         label="Company"
                         rules={[{ required: true, message: 'Please select a company!' }]}
                     >
-                        <Select placeholder="Select a company">
+                        <Select
+                            placeholder="Select a company"
+                            showSearch
+                            filterOption={(input, option) =>
+                                (option?.children ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
                             {companies.map(company => (
                                 <Select.Option key={company.id} value={company.id}>
                                     {company.name}
