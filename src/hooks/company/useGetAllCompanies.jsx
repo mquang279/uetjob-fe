@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { API_BASE_URL } from '../../constants/constant';
 import axiosClient from '../../utils/axiosClient';
 
-const useGetAllCompanies = ({ page = 0, pageSize = 100 }) => {
+const useGetAllCompanies = ({ page = 0, pageSize = 9 }) => {
     return useQuery({
         queryKey: ['companies', page, pageSize],
         queryFn: async () => {

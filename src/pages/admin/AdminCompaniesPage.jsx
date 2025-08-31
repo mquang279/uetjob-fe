@@ -1,12 +1,12 @@
 import { Button, Modal, Table, Form, Input, notification } from "antd"
 import { Plus, Pen, Trash } from 'lucide-react';
 import { useEffect, useState } from "react";
-import { useJobsCount } from "../../hooks/job/useJobsCount";
 import { useGetAllCompanies } from "../../hooks/company/useGetAllCompanies";
 import { ConfigProvider, Pagination } from 'antd';
 import { useCreateCompany } from "../../hooks/company/useCreateCompany";
 import { useUpdateCompany } from "../../hooks/company/useUpdateCompany";
 import useDeleteCompany from "../../hooks/company/useDeleteCompany";
+import { useCompaniesCount } from "../../hooks/company/useCompaniesCount";
 
 const AdminCompaniesPage = () => {
     const [api, contextHolder] = notification.useNotification()
@@ -14,9 +14,9 @@ const AdminCompaniesPage = () => {
     const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
-    const { data: jobCount } = useJobsCount()
+    const { data: totalCompanies } = useCompaniesCount()
     const [currentCompany, setCurrentCompany] = useState(null)
-    const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
+    const { data: companiesData } = useGetAllCompanies({ page: page - 1, pageSize: pageSize })
     const [form] = Form.useForm()
     const createCompanyMutation = useCreateCompany()
     const deleteCompanyMutation = useDeleteCompany()
@@ -148,7 +148,7 @@ const AdminCompaniesPage = () => {
                                 align="center"
                                 current={page}
                                 onChange={(newPage) => setPage(newPage)}
-                                total={jobCount}
+                                total={totalCompanies}
                                 pageSize={pageSize}
                                 showSizeChanger={false}
                             />
