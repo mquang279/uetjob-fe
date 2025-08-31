@@ -53,9 +53,9 @@ const JobCard = ({ job }) => {
                             <Building2 className="w-6 h-6 text-black" />
                         )}
                     </NavLink>
-                    <div className="job-name flex-1 flex flex-col">
-                        <NavLink to={`/jobs/${job.id}`} className='font-bold'>{job.title}</NavLink>
-                        <NavLink to={`/companies/${job.company.id}`} className='text-sm text-gray-600'>{job.company.name}</NavLink>
+                    <div className="job-name flex-1 flex flex-col min-w-0">
+                        <NavLink to={`/jobs/${job.id}`} className='font-bold truncate' title={job.title}>{job.title}</NavLink>
+                        <NavLink to={`/companies/${job.company.id}`} className='text-sm text-gray-600 truncate' title={job.company.name}>{job.company.name}</NavLink>
                     </div>
                     <button className='border-1 px-1 rounded-2xl text-red-500 hover:bg-red-100' onClick={() => setLike(!like)}>
                         <Heart className={`w-4 ${like ? 'fill-red-500' : ''}`} />
