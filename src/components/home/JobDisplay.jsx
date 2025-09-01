@@ -1,14 +1,14 @@
 import JobCard from '../job/JobCard'
-import { useGetAllJobs } from '../../hooks/job/useGetAllJobs'
-import { useJobsCount } from '../../hooks/job/useJobsCount'
 import { ConfigProvider, Pagination } from 'antd';
 import { useState } from 'react';
+import { useGetActiveJobs } from '../../hooks/job/useGetActiveJobs';
+import { useActiveJobsCount } from '../../hooks/job/useActiveJobsCount';
 
 const JobDisplay = () => {
     const pageSize = 9
-    const { data: jobCount } = useJobsCount()
+    const { data: jobCount } = useActiveJobsCount()
     const [page, setPage] = useState(1)
-    const { data, isLoading, error } = useGetAllJobs({ page: page - 1, pageSize })
+    const { data, isLoading, error } = useGetActiveJobs({ page: page - 1, pageSize })
     const jobs = data?.content || []
 
     if (error) {
@@ -89,7 +89,6 @@ const JobDisplay = () => {
                     ))}
                 </div>
 
-                {/* Show more indicator if there are more than 15 jobs */}
                 {!isLoading && jobCount > 9 && (
                     <div className='mt-4'>
                         <ConfigProvider

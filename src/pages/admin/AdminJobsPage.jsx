@@ -9,6 +9,8 @@ import { ConfigProvider, Pagination } from 'antd';
 import useDeleteJob from "../../hooks/job/useDeleteJob";
 import dayjs from 'dayjs';
 import { useUpdateJob } from "../../hooks/job/useUpdateJob";
+import { useGetAllSkills } from "../../hooks/skill/useGetAllSkills";
+import { useCreateSkill } from "../../hooks/skill/useCreateSkill";
 
 const AdminJobsPage = () => {
     const [api, contextHolder] = notification.useNotification()
@@ -20,17 +22,20 @@ const AdminJobsPage = () => {
     const [currentJob, setCurrentJob] = useState(null)
     const { data } = useGetAllJobs({ page: page - 1, pageSize })
     const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
+    const { data: skillsData } = useGetAllSkills()
     const [form] = Form.useForm()
     const createJobMutation = useCreateJob()
     const deleteJobMutation = useDeleteJob()
     const updateJobMutation = useUpdateJob()
+    const createSkillMutation = useCreateSkill()
 
     const dataSource = data?.content || []
     const companies = companiesData?.content || []
+    const skills = skillsData?.content || []
 
     useEffect(() => {
-        console.log(showModal)
-    }, [showModal])
+        console.log(currentJob)
+    }, [currentJob])
 
     useEffect(() => {
         if (isEdit && currentJob && showModal) {
@@ -39,6 +44,7 @@ const AdminJobsPage = () => {
                 companyId: currentJob.company.id,
                 location: currentJob.location,
                 description: currentJob.description,
+                skills: currentJob.skills.map((skill) => skill.id),
                 minSalary: currentJob.minSalary,
                 maxSalary: currentJob.maxSalary,
                 endDate: currentJob.endDate ? dayjs(currentJob.endDate) : null,
@@ -52,6 +58,7 @@ const AdminJobsPage = () => {
                 companyId: undefined,
                 location: '',
                 description: '',
+                skills: [],
                 minSalary: undefined,
                 maxSalary: undefined,
                 endDate: null,
@@ -140,6 +147,13 @@ const AdminJobsPage = () => {
             const values = await form.validateFields()
             if (values.startDate) values.startDate = values.startDate.format("YYYY-MM-DD HH:mm:ss")
             if (values.endDate) values.endDate = values.endDate.format("YYYY-MM-DD HH:mm:ss")
+
+            const jobSkills = values.skills
+            values.skills = jobSkills.map((skillId) => {
+                return {
+                    id: skillId
+                }
+            })
 
             const { companyId, ...jobData } = values
             if (isEdit) {
@@ -261,6 +275,40 @@ const AdminJobsPage = () => {
                         />
                     </Form.Item>
 
+                    <Form.Item
+                        name="skills"
+                        label="Skills"
+                    >
+                        <Select
+                            mode="multiple"
+                            placeholder="Select skills or type to add new"
+                            showSearch
+                            filterOption={(input, option) =>
+                                (option?.children ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            style={{ width: '100%' }}
+                            onKeyDown={async (e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    const inputValue = e.target.value.trim();
+                                    if (inputValue && !skills.includes(inputValue)) {
+                                        try {
+                                            await createSkillMutation.mutateAsync({ name: inputValue });
+                                            openNotification('success', 'Skill Created', `"${inputValue}" has been added to skills.`);
+                                            e.target.value = '';
+                                        } catch {
+                                            openNotification('error', 'Skill Creation Failed', `Failed to create skill "${inputValue}".`);
+                                        }
+                                    }
+                                }
+                            }}
+                        >
+                            {skills.map((skill, index) => (
+                                <Select.Option key={index} value={skill.id}>{skill.name}</Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item
                             name="minSalary"
@@ -321,6 +369,13 @@ const AdminJobsPage = () => {
                             </Select>
                         </Form.Item>
                     </div>
+                    <Form.Item
+                        name="active"
+                        label="Active Status"
+                        valuePropName="checked"
+                    >
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
+                    </Form.Item>
                 </Form>
             </Modal>
         </>
