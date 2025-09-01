@@ -369,6 +369,13 @@ const AdminJobsPage = () => {
                             </Select>
                         </Form.Item>
                     </div>
+                    <Form.Item
+                        name="active"
+                        label="Active Status"
+                        valuePropName="checked"
+                    >
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" />
+                    </Form.Item>
                 </Form>
             </Modal>
         </>
