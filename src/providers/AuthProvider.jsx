@@ -45,6 +45,7 @@ const AuthProvider = ({ children }) => {
             const existingToken = localStorage.getItem('token')
             if (existingToken) {
                 setToken(existingToken)
+                console.log(existingToken)
             }
 
             try {

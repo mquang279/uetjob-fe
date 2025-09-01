@@ -12,6 +12,8 @@ const useCreateJob = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['jobs'] })
             queryClient.invalidateQueries({ queryKey: ['job-count'] })
+            queryClient.invalidateQueries({ queryKey: ['active-jobs'] })
+            queryClient.invalidateQueries({ queryKey: ['active-jobs-count'] })
         }
     })
 };
