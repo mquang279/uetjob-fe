@@ -1,5 +1,6 @@
 import { CircleDollarSign, MapPin, Hourglass, Clock, Heart, Send, Building2, Pin, Briefcase, Users, UserStar, BriefcaseBusiness } from 'lucide-react';
 import { mapJobLevel } from '../../utils/enumMappings';
+import { useState } from 'react';
 
 const formatSalary = (minSalary, maxSalary) => {
     if (minSalary && maxSalary) {
@@ -24,6 +25,12 @@ const JobInfoItem = ({ tag, info, Icon }) => {
 }
 
 const JobHeader = ({ job }) => {
+    const [isSaved, setIsSaved] = useState(false);
+
+    const handleSaveJob = () => {
+        setIsSaved(!isSaved);
+    };
+
     return (
         <div className="col-span-3 py-4 px-9 bg-white rounded-md shadow-lg">
             <div className="job-title text-2xl font-semibold">
@@ -57,9 +64,15 @@ const JobHeader = ({ job }) => {
                     <Send className='w-4 h-4' />
                     <p>Ứng tuyển ngay</p>
                 </button>
-                <button className='flex items-center gap-2 justify-center bg-white border-red-600 border px-3 py-2 rounded-md text-sm font-bold text-red-600 hover:bg-red-600 hover:text-white'>
-                    <Heart className='w-4 h-4' />
-                    <p>Lưu tin</p>
+                <button
+                    onClick={handleSaveJob}
+                    className={`flex items-center gap-2 justify-center px-3 py-2 rounded-md text-sm font-bold transition-colors border ${isSaved
+                        ? 'bg-red-600 text-white border-red-600 hover:bg-red-700'
+                        : 'bg-white border-red-600 text-red-600 hover:bg-red-600 hover:text-white'
+                        }`}
+                >
+                    <Heart className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
+                    <p>{isSaved ? 'Đã lưu' : 'Lưu tin'}</p>
                 </button>
             </div>
         </div>
