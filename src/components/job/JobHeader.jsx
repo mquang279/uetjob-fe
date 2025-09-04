@@ -15,7 +15,7 @@ const formatSalary = (minSalary, maxSalary) => {
 const JobInfoItem = ({ tag, info, Icon }) => {
     return (
         <div className='location flex gap-2 items-center'>
-            <Icon className='bg-red-500 px-1 py-1 rounded-2xl text-red-500 w-8 h-8 fill-white' />
+            <Icon className='bg-red-600 px-1 py-1 rounded-2xl text-red-600 w-8 h-8 fill-white' />
             <div>
                 <p className='text-sm'>{tag}</p>
                 <p className='font-semibold'>{info}</p>
