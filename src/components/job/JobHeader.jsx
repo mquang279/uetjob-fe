@@ -60,13 +60,13 @@ const JobHeader = ({ job }) => {
                 </p>
             </div>
             <div className='flex gap-4 mt-2'>
-                <button className='flex items-center gap-2 justify-center bg-red-600 text-white px-3 py-2 flex-1 rounded-md text-sm font-bold hover:bg-red-700'>
+                <button className='flex items-center gap-2 basis-5/6 justify-center bg-red-600 text-white px-3 py-2 flex-1 rounded-md text-sm font-bold hover:bg-red-700'>
                     <Send className='w-4 h-4' />
                     <p>Ứng tuyển ngay</p>
                 </button>
                 <button
                     onClick={handleSaveJob}
-                    className={`flex items-center gap-2 justify-center px-3 py-2 rounded-md text-sm font-bold transition-colors border ${isSaved
+                    className={`flex items-center gap-2 basis-1/6 justify-center px-3 py-2 rounded-md text-sm font-bold transition-colors border ${isSaved
                         ? 'bg-red-600 text-white border-red-600 hover:bg-red-700'
                         : 'bg-white border-red-600 text-red-600 hover:bg-red-600 hover:text-white'
                         }`}
