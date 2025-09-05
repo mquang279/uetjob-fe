@@ -6,7 +6,7 @@ const SearchBar = () => {
     const [inputValue, setInputValue] = useState('')
 
     return (
-        <div className="search-input flex gap-4 py-[32px]">
+        <div className="search-input flex gap-4">
             <input
                 type="text"
                 placeholder="Enter keywork skill (Java, iOS,...), job title, company"

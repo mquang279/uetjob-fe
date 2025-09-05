@@ -50,6 +50,8 @@ const AdminJobsPage = () => {
                 endDate: currentJob.endDate ? dayjs(currentJob.endDate) : null,
                 quantity: currentJob.quantity,
                 level: currentJob.level,
+                candidateLevel: currentJob.candidateLevel,
+                jobType: currentJob.jobType,
                 active: currentJob.active
             });
         } else if (!isEdit && showModal) {
@@ -64,6 +66,8 @@ const AdminJobsPage = () => {
                 endDate: null,
                 quantity: 1,
                 level: 'FRESHER',
+                candidateLevel: undefined,
+                jobType: undefined,
                 active: true
             });
         }
@@ -156,6 +160,8 @@ const AdminJobsPage = () => {
             })
 
             const { companyId, ...jobData } = values
+
+            console.log(jobData)
             if (isEdit) {
                 await updateJobMutation.mutateAsync({ companyId, jobId: currentJob.id, jobData })
             } else {
@@ -163,8 +169,8 @@ const AdminJobsPage = () => {
             }
             setShowModal(false)
             form.resetFields()
-        } catch {
-            console.log('Submit Job Error')
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -276,6 +282,35 @@ const AdminJobsPage = () => {
                     </Form.Item>
 
                     <Form.Item
+                        name="candidateLevel"
+                        label="Candidate Level"
+                        rules={[{ required: true, message: 'Please select candidate level!' }]}
+                    >
+                        <Select placeholder="Select candidate level">
+                            <Select.Option value="NHAN_VIEN">Nhân viên</Select.Option>
+                            <Select.Option value="NHOM_TRUONG">Nhóm trưởng</Select.Option>
+                            <Select.Option value="TRUONG_PHONG">Trưởng phòng</Select.Option>
+                            <Select.Option value="PHO_GIAM_DOC">Phó Giám đốc</Select.Option>
+                            <Select.Option value="GIAM_DOC">Giám đốc</Select.Option>
+                            <Select.Option value="OTHER">Khác</Select.Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="jobType"
+                        label="Job type"
+                        rules={[{ required: true, message: 'Please select job type!' }]}
+                    >
+                        <Select
+                            placeholder="Select job type"
+                            style={{ width: '100%' }}
+                        >
+                            <Select.Option value="FULL_TIME">Full time</Select.Option>
+                            <Select.Option value="PART_TIME">Part time</Select.Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item
                         name="skills"
                         label="Skills"
                     >
@@ -369,6 +404,8 @@ const AdminJobsPage = () => {
                             </Select>
                         </Form.Item>
                     </div>
+
+
                     <Form.Item
                         name="active"
                         label="Active Status"
