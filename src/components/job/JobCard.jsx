@@ -23,19 +23,17 @@ const JobCard = ({ job }) => {
         return `$${min?.toLocaleString() || 'N/A'} - $${max?.toLocaleString() || 'N/A'}`
     }
 
-    const getDaysAgo = (dateString) => {
-        if (!dateString) return "Recently"
-
+    const getDaysRemain = (dateString) => {
         const posted = new Date(dateString)
         const now = new Date()
         const diffTime = Math.abs(now - posted)
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
-        if (diffDays === 0) return "Today"
-        if (diffDays === 1) return "1 day ago"
-        if (diffDays < 7) return `${diffDays} days ago`
-        if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`
-        return `${Math.ceil(diffDays / 30)} months ago`
+        if (diffDays === 0) return 1
+        if (diffDays === 1) return 1
+        if (diffDays < 7) return diffDays
+        if (diffDays < 30) return Math.ceil(diffDays / 7)
+        return Math.ceil(diffDays / 30)
     }
 
     return (
@@ -61,15 +59,19 @@ const JobCard = ({ job }) => {
                         <Heart className={`w-4 ${like ? 'fill-red-500' : ''}`} />
                     </button>
                 </div>
-                <div className="job-info mt-2 flex justify-between">
+                <div className="job-info mt-2 flex justify-between items-center">
                     <div className="info flex gap-2">
                         <CardInfo>{formatSalary(job.minSalary, job.maxSalary)}</CardInfo>
                         <CardInfo>{job.location}</CardInfo>
                     </div>
-                    <p className='text-sm text-gray-600'>{getDaysAgo(job.createdAt)}</p>
+                    <CardInfo>
+                        {job.endDate ?
+                            <>Còn <span className="font-bold">{getDaysRemain(job.endDate)}</span> ngày để ứng tuyển</>
+                            : <>Vô thời hạn</>}
+                    </CardInfo>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
