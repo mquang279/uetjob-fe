@@ -1,4 +1,3 @@
-
 import { Heart, Building2 } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { useState } from 'react';

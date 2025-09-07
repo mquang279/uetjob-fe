@@ -68,6 +68,7 @@ const CompanyPage = () => {
 
                     <div className="jobs  min-h-40">
                         <ComponentHeader title="Tuyển dụng" />
+                        
                     </div>
                 </div>
 
