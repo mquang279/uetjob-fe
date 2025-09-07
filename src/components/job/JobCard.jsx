@@ -17,7 +17,7 @@ const JobCard = ({ job }) => {
     if (!job) return null
 
     const formatSalary = (min, max) => {
-        if (!min && !max) return "Negotiable"
+        if (!min && !max) return "Thỏa thuận"
         if (min === max) return `$${min.toLocaleString()}`
         return `$${min?.toLocaleString() || 'N/A'} - $${max?.toLocaleString() || 'N/A'}`
     }
