@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Search } from "lucide-react"
+import { Building2, Search } from "lucide-react"
 import Button from "./button"
 import { useSearchJob } from "../../hooks/job/useSearchJobs"
 import { List } from 'antd';
@@ -41,17 +41,22 @@ const SearchBar = () => {
                         itemLayout="horizontal"
                         dataSource={jobs}
                         renderItem={(item, index) => (
-                            <List.Item key={index}>
-                                <List.Item.Meta
-                                    title={<NavLink to={`/jobs/${item.id}`} className='text-md font-bold'>{item.title}</NavLink>}
-                                    description={
-                                        <div>
-                                            <p>{item?.company.name}</p>
-                                            <p className="text-green-600 text-xs font-bold">{formatSalary(item.minSalary, item.maxSalary)}</p>
-                                        </div>
-                                    }
-                                />
-                            </List.Item>
+                            <div className="flex items-center gap-4">
+                                <div className="">
+                                    <Building2 className="w-14 h-14" />
+                                </div>
+                                <List.Item key={index} className="flex-1">
+                                    <List.Item.Meta
+                                        title={<NavLink to={`/jobs/${item.id}`} className='text-md font-bold text-base'>{item.title}</NavLink>}
+                                        description={
+                                            <div>
+                                                <p>{item?.company.name}</p>
+                                                <p className="text-green-600 text-xs font-bold">{formatSalary(item.minSalary, item.maxSalary)}</p>
+                                            </div>
+                                        }
+                                    />
+                                </List.Item>
+                            </div>
                         )}
                     />
                 </div>}
