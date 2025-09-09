@@ -4,6 +4,7 @@ import Button from "./button"
 import { useSearchJob } from "../../hooks/job/useSearchJobs"
 import { List } from 'antd';
 import { NavLink } from 'react-router'
+import CompanyLogo from "../company/CompanyLogo";
 
 const SearchBar = () => {
     const [keyword, setKeyword] = useState('')
@@ -42,8 +43,8 @@ const SearchBar = () => {
                         dataSource={jobs}
                         renderItem={(item, index) => (
                             <div className="flex items-center gap-4">
-                                <div className="">
-                                    <Building2 className="w-14 h-14" />
+                                <div className="w-12 h-12">
+                                    <CompanyLogo company={item.company} />
                                 </div>
                                 <List.Item key={index} className="flex-1">
                                     <List.Item.Meta

@@ -2,6 +2,7 @@ import { NavLink } from 'react-router';
 import LoadingSpinner from '../../components/ui/LoadingSpinner'
 import ErrorDisplay from '../../components/ui/ErrorDisplay'
 import { CircleDollarSign, MapPin, Hourglass, Clock, Heart, Send, Building2, Pin, Briefcase, Users, UserStar, BriefcaseBusiness } from 'lucide-react';
+import CompanyLogo from '../company/CompanyLogo';
 
 const CompanyInfo = ({ company, isLoading, error }) => {
     if (isLoading) {
@@ -30,11 +31,8 @@ const CompanyInfo = ({ company, isLoading, error }) => {
         <div className="bg-white rounded-md p-4 shadow-lg h-fit">
             <NavLink to={`/companies/${company.id}`} className="company-name flex gap-4 items-center">
                 {company ? (
-                    <div className='w-20 h-20 border border-gray-400 rounded-lg flex items-center justify-center px-2'>
-                        <img
-                            src={`http://localhost:8080/uploads/company/${company.id}.png`}
-                            alt={`${company.name} logo`}
-                        />
+                    <div className='w-20 h-20'>
+                        <CompanyLogo company={company} />
                     </div>
                 ) : (
                     <Building2 className="w-14 h-14 text-black flex-shrink-0" />

@@ -1,6 +1,7 @@
 import { Heart, Building2 } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { useState } from 'react';
+import CompanyLogo from '../company/CompanyLogo';
 
 
 const CardInfo = ({ children }) => {
@@ -39,12 +40,9 @@ const JobCard = ({ job }) => {
         <div className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
             <div className='px-3 py-3'>
                 <div className="job-header flex gap-3 items-start">
-                    <NavLink to={`/jobs/${job.id}`} className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-lg px-1">
+                    <NavLink to={`/jobs/${job.id}`} className="w-12 h-12">
                         {job.company ? (
-                            <img
-                                src={`http://localhost:8080/uploads/company/${job.company.id}.png`}
-                                alt={`${job.company.name} logo`}
-                            />
+                            <CompanyLogo company={job.company} />
                         ) : (
                             <Building2 className="w-6 h-6 text-black" />
                         )}
