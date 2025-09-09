@@ -27,14 +27,15 @@ const CompanyInfo = ({ company, isLoading, error }) => {
     }
 
     return (
-        <div className="bg-white rounded-md p-4 shadow-lg">
+        <div className="bg-white rounded-md p-4 shadow-lg h-fit">
             <NavLink to={`/companies/${company.id}`} className="company-name flex gap-4 items-center">
-                {company.logo ? (
-                    <img
-                        src={company.logo}
-                        alt={`${company.name} logo`}
-                        className="w-10 h-10 object-cover rounded-lg flex-shrink-0"
-                    />
+                {company ? (
+                    <div className='w-20 h-20 border border-gray-400 rounded-lg flex items-center justify-center px-2'>
+                        <img
+                            src={`http://localhost:8080/uploads/company/${company.id}.png`}
+                            alt={`${company.name} logo`}
+                        />
+                    </div>
                 ) : (
                     <Building2 className="w-14 h-14 text-black flex-shrink-0" />
                 )}
