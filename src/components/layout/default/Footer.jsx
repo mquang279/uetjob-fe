@@ -24,7 +24,7 @@ const FOOTER_DATA = {
 };
 
 const FooterSection = ({ title, items, className = "" }) => (
-    <div className={`footer-section ${className}`}>
+    <div className={`footer-section ${className} flex flex-col items-center`}>
         <h3 className="font-bold py-4 text-lg">{title}</h3>
         <ul className="space-y-2">
             {items.map((item, index) => (
@@ -53,13 +53,13 @@ const FooterLogo = ({ src, alt }) => (
 const Footer = () => {
     return (
         <footer className="footer w-full">
-            <div className="flex flex-col lg:flex-row justify-between items-center gap-8 px-12 py-12 text-white bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)]">
+            <div className="flex flex-col justify-between items-center gap-8 px-12 py-12 text-white bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)]">
                 <FooterLogo
                     src={FOOTER_DATA.logo.src}
                     alt={FOOTER_DATA.logo.alt}
                 />
 
-                <div className="flex gap-20 flex-1 justify-end">
+                <div className="flex flex-col md:flex-row gap-20 flex-1 justify-end">
                     <FooterSection
                         title={FOOTER_DATA.aboutUs.title}
                         items={FOOTER_DATA.aboutUs.links}
@@ -73,7 +73,6 @@ const Footer = () => {
                     <FooterSection
                         title={FOOTER_DATA.contact.title}
                         items={FOOTER_DATA.contact.info}
-                        className="lg:min-w-0 lg:flex-shrink-0"
                     />
                 </div>
             </div>
