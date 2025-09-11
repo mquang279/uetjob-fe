@@ -34,7 +34,7 @@ const CompanyPage = () => {
         <div className="company-page my-4">
             <div className="mx-20 grid min-h-20 grid-cols-3 gap-y-6 gap-x-6">
                 <div className="col-span-full bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] min-h-20 rounded-lg flex justify-between py-10 items-center px-10 gap-20">
-                    <div className="company-logo h-35 w-35">
+                    <div className="company-logo h-20 w-20 lg:h-35 lg:w-35 bg-black">
                         <CompanyLogo company={company} />
                     </div>
 

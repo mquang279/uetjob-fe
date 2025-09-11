@@ -7,7 +7,8 @@ import { useCreateCompany } from "../../hooks/company/useCreateCompany";
 import { useUpdateCompany } from "../../hooks/company/useUpdateCompany";
 import useDeleteCompany from "../../hooks/company/useDeleteCompany";
 import { useCompaniesCount } from "../../hooks/company/useCompaniesCount";
-import { useUploadFile } from "../../hooks/storage/useUploadFile";
+import useGetPresignedUrl from "../../hooks/storage/useGetPresignedUrl";
+import useUploadFileUsingPresignedUrl from "../../hooks/storage/useUploadFileUsingPresignedUrl";
 
 const AdminCompaniesPage = () => {
     const [api, contextHolder] = notification.useNotification()
@@ -22,7 +23,8 @@ const AdminCompaniesPage = () => {
     const createCompanyMutation = useCreateCompany()
     const deleteCompanyMutation = useDeleteCompany()
     const updateCompanyMutation = useUpdateCompany()
-    const uploadFileMutation = useUploadFile()
+    const getPresignedUrl = useGetPresignedUrl()
+    const uploadFileUsingPresignedUrl = useUploadFileUsingPresignedUrl()
 
     const dataSource = companiesData?.content || []
 
@@ -98,6 +100,19 @@ const AdminCompaniesPage = () => {
         }
     }
 
+    const handleUploadLogo = async ({ company, logo }) => {
+        try {
+            const body = {
+                folder: "company",
+                fileName: company.id
+            }
+            const url = await getPresignedUrl.mutateAsync(body)
+            await uploadFileUsingPresignedUrl.mutateAsync({ url, file: logo.originFileObj })
+        } catch (error) {
+            openNotification('error', 'Submit Failed', error.response.data.message)
+        }
+    }
+
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields()
@@ -106,26 +121,14 @@ const AdminCompaniesPage = () => {
             if (isEdit) {
                 await updateCompanyMutation.mutateAsync({ companyId: currentCompany.id, companyData: companyData })
                 if (logo) {
-                    console.log('Upload avatar')
-                    const formData = new FormData()
-                    formData.append('folder', 'company')
-                    formData.append('file_name', currentCompany.id)
-                    formData.append('file', logo.originFileObj)
-                    await uploadFileMutation.mutateAsync(formData)
+                    handleUploadLogo({ company: currentCompany, logo })
                 }
                 openNotification('success', 'Company Modified', 'Company information has been successfully modified.')
             } else {
-                const { data: newCompany } = await createCompanyMutation.mutateAsync(companyData)
-
+                const newCompany = await createCompanyMutation.mutateAsync(companyData)
                 if (logo) {
-                    console.log('Upload avatar')
-                    const formData = new FormData()
-                    formData.append('folder', 'company')
-                    formData.append('file_name', newCompany.id)
-                    formData.append('file', logo.originFileObj)
-                    await uploadFileMutation.mutateAsync(formData)
+                    handleUploadLogo({ company: newCompany, logo })
                 }
-
                 openNotification('success', 'Company Created', 'The company has been successfully added.')
             }
             setShowModal(false)

@@ -3,7 +3,7 @@ import axiosClient from '../../utils/axiosClient'
 import useDebounce from '../custom/useDebounce';
 
 const useSearchJob = ({ page = 0, pageSize = 9, keyword }) => {
-    const debouncedSearchKeyword = useDebounce(keyword, 1000)
+    const debouncedSearchKeyword = useDebounce(keyword, 500)
 
     return useQuery({
         queryKey: ['searchJobResults', page, pageSize, debouncedSearchKeyword],

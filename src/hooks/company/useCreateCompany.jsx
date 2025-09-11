@@ -7,6 +7,7 @@ const useCreateCompany = () => {
     return useMutation({
         mutationFn: async (values) => {
             const { data } = await axiosClient.post(`/companies`, values)
+            console.log(data)
             return data
         },
         onSuccess: () => {

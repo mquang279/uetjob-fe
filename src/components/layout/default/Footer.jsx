@@ -26,11 +26,11 @@ const FOOTER_DATA = {
 const FooterSection = ({ title, items, className = "" }) => (
     <div className={`footer-section ${className} flex flex-col items-center`}>
         <h3 className="font-bold py-4 text-lg">{title}</h3>
-        <ul className="space-y-2">
+        <ul className="space-y-2 flex-col">
             {items.map((item, index) => (
                 <li
                     key={index}
-                    className="text-gray-300 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer"
+                    className="text-gray-300 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer text-center"
                 >
                     {item}
                 </li>
