@@ -17,7 +17,7 @@ const SearchForm = () => {
     const { data: jobCount } = useActiveJobsCount()
 
     return (
-        <div className="search-form bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full h-auto px-[160px] py-[64px]">
+        <div className="search-form bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full h-auto px-4 md:px-20 xl:px-32 py-[64px]">
             <h1 className="text-3xl font-black">{jobCount} IT Jobs For "Chất" Developers</h1>
 
             <div className="py-4">

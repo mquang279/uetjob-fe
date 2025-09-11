@@ -53,7 +53,7 @@ const JobHeader = ({ job }) => {
                     Icon={Hourglass}
                 />
             </div>
-            <div className="end-date bg-gray-300 inline-block px-2 py-0.5 mb-2 rounded-md my-2">
+            <div className="end-date bg-gray-100 inline-block px-2 py-0.5 mb-2 rounded-md my-2">
                 <p className='flex gap-2 items-center text-gray-800'>
                     <Clock className='w-4 h-4' />
                     {job.endDate ? `Hạn nộp hồ sơ: ${new Date(job.endDate).toLocaleDateString('en-GB')}` : 'Không thời hạn'}
