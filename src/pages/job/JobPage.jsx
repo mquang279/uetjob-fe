@@ -12,7 +12,7 @@ import GeneralJobInfo from '../../components/job/GeneralJobInfo'
 
 const SearchHeader = () => {
     return (
-        <div className='bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full px-36 py-4'>
+        <div className='bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full px-4 lg:px-36 py-4'>
             <SearchBar />
         </div>
     )
@@ -54,8 +54,8 @@ const JobPage = () => {
 
     return (
         <div>
-            <SearchHeader />
-            <div className="grid grid-cols-4 gap-y-6 gap-x-4 px-20 py-4 mx-2 bg-gray-100">
+            <div className="lg:grid lg:grid-cols-4 lg:gap-y-6 lg:gap-x-4 lg:px-20 
+                            py-4 mx-2 flex flex-col gap-4">
                 <JobHeader job={job} />
                 <CompanyInfo
                     company={company}
