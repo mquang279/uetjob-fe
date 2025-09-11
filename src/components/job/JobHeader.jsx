@@ -32,7 +32,7 @@ const JobHeader = ({ job }) => {
     };
 
     return (
-        <div className="col-span-3 py-4 px-4 lg:px-9 bg-white rounded-md shadow-lg">
+        <div className="col-span-3 py-4 px-4 lg:px-9 bg-white rounded-lg inset-shadow-xs">
             <div className="job-title text-2xl font-semibold">
                 {job.title}
             </div>

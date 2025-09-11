@@ -3,7 +3,7 @@ import { CircleDollarSign, MapPin, Hourglass, Clock, Heart, Send, Building2, Pin
 
 const GeneralJobInfo = ({ job }) => {
     return (
-        <div className='bg-white rounded-md p-4 shadow-lg'>
+        <div className='bg-white rounded-lg inset-shadow-xs p-4'>
             <div className='general-info'>
                 <h1 className='font-bold text-xl'>Thông tin chung</h1>
                 <div className="company-info mt-3 text-sm grid grid-cols-3 gap-y-4 gap-x-0">

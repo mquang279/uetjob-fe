@@ -53,18 +53,16 @@ const JobPage = () => {
     }
 
     return (
-        <div>
-            <div className="lg:grid lg:grid-cols-4 lg:gap-y-6 lg:gap-x-4 lg:px-20 
-                            py-4 mx-2 flex flex-col gap-4">
-                <JobHeader job={job} />
-                <CompanyInfo
-                    company={company}
-                    isLoading={companyLoading}
-                    error={companyError}
-                />
-                <JobDescription job={job} />
-                <GeneralJobInfo job={job} />
-            </div>
+        <div className="lg:grid lg:grid-cols-4 lg:gap-y-6 lg:gap-x-4 lg:px-20 
+                            py-4 mx-2 flex flex-col gap-4 !bg-[rgb(247,247,247)]">
+            <JobHeader job={job} />
+            <CompanyInfo
+                company={company}
+                isLoading={companyLoading}
+                error={companyError}
+            />
+            <JobDescription job={job} />
+            <GeneralJobInfo job={job} />
         </div>
     )
 }

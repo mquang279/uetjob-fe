@@ -37,7 +37,7 @@ const JobCard = ({ job }) => {
     }
 
     return (
-        <div className="job-card bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
+        <div className="job-card bg-white rounded-lg inset-shadow-xs hover:shadow-md transition-all duration-200 overflow-hidden">
             <div className='px-3 py-3'>
                 <div className="job-header flex gap-3 items-start">
                     <NavLink to={`/jobs/${job.id}`} className="w-12 h-12">

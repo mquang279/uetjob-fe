@@ -62,7 +62,7 @@ const JobDisplay = () => {
     }
 
     return (
-        <div className="job-display" style={{ backgroundColor: 'rgb(243, 245, 247)' }}>
+        <div className="job-display !bg-[rgb(247,247,247)]">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 {!isLoading && jobs.length > 0 && (
