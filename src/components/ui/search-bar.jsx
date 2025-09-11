@@ -35,7 +35,7 @@ const SearchBar = () => {
                     placeholder="Enter keywork skill (Java, iOS,...), job title, company"
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
-                    className="bg-white text-black py-[11px] px-[16px] w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
+                    className="bg-white text-black py-[11px] px-[16px] w-full rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
                 />
                 {jobs && <div className="absolute w-full bg-white rounded-lg px-4 mt-2 shadow-lg border z-50">
                     <List
@@ -62,10 +62,10 @@ const SearchBar = () => {
                     />
                 </div>}
             </div>
-            <Button variant="primary" size="medium">
+            <button className="bg-red-600 rounded-md flex font-bold items-center px-3 gap-4 md:px-10 lg:px-15">
                 <Search />
-                Search
-            </Button>
+                <p className="hidden md:flex">Search</p>
+            </button>
         </div>
     )
 }
