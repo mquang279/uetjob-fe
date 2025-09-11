@@ -10,7 +10,7 @@ import CompanyPage from "../pages/company/CompanyPage";
 
 const publicRoutes = [
     { path: '/', component: HomePage, layout: DefaultLayout },
-    { path: '/login', component: LoginPage, layout: null },
+    { path: '/login', component: LoginPage, layout: DefaultLayout },
     { path: '/jobs/:id', component: JobPage, layout: DefaultLayout },
     { path: '/admin', component: AdminPage, layout: AdminLayout },
     { path: '/admin/jobs', component: AdminJobsPage, layout: AdminLayout },

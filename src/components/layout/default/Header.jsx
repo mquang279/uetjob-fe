@@ -1,4 +1,4 @@
-import { NavLink } from "react-router"
+import { NavLink, useLocation } from "react-router"
 import { useAuth } from "../../../providers/AuthProvider"
 import { Sidebar, SideBarItem } from "../../ui/Sidebar"
 import { BriefcaseBusiness, Building2, FileUser, LayoutDashboard, NotebookText } from "lucide-react"
@@ -12,6 +12,7 @@ const NAV_ITEMS = [
 
 const Header = () => {
     const { isAuthenticated, user, logout } = useAuth()
+    const location = useLocation()
 
     const handleLogout = async () => {
         try {
@@ -58,8 +59,8 @@ const Header = () => {
                 {/* User */}
                 <div className="header-action flex items-center text-nowrap font-medium gap-8 flex-shrink-0">
                     <NavLink to="/employers" className="hidden lg:flex hover:underline cursor-pointer">For Employers</NavLink>
-                    {!isAuthenticated &&
-                        <NavLink to="/login" className="w-full hover:underline cursor-pointer">Sign in/Sign up</NavLink>
+                    {!isAuthenticated && !(location.pathname === '/login') &&
+                        <NavLink to="/login" className="w-full hover:underline cursor-pointer">Sign in</NavLink>
                     }
                     {isAuthenticated && user && (
                         <div className="flex items-center gap-4">
@@ -79,7 +80,7 @@ const Header = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

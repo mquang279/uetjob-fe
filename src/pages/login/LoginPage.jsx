@@ -101,7 +101,7 @@ const LoginPage = () => {
                 <div className="flex flex-col items-center lg:flex-row gap-8 lg:gap-16 xl:gap-24 max-w-6xl mx-auto">
                     {/* Login Form Section */}
                     <div className="flex-1 max-w-md mx-auto lg:mx-0">
-                        <div className="bg-white p-6 lg:p-8 rounded-lg shadow-sm border">
+                        <div className="bg-white p-6 lg:p-8 rounded-lg shadow-sm lg:border">
                             <header className="mb-6">
                                 <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-3">
                                     Welcome to UETJob

@@ -6,7 +6,7 @@ const Sidebar = ({ children }) => {
     const [expanded, setExpanded] = useState(false)
 
     return (
-        !expanded ? <ChevronFirst onClick={() => setExpanded(true)} /> :
+        !expanded ? <ChevronFirst className="lg:hidden" onClick={() => setExpanded(true)} /> :
             <aside className={`h-screen lg:hidden fixed top-0 left-0 z-50`}>
                 <nav className="h-full w-full flex flex-col bg-black shadow-sm">
                     <div className="p-4 pb-2 flex justify-end items-center">

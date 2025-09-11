@@ -59,7 +59,7 @@ const Footer = () => {
                     alt={FOOTER_DATA.logo.alt}
                 />
 
-                <div className="flex flex-col md:flex-row gap-20 flex-1 justify-end">
+                <div className="flex flex-col md:flex-row gap-10 md:gap-20 flex-1 justify-between">
                     <FooterSection
                         title={FOOTER_DATA.aboutUs.title}
                         items={FOOTER_DATA.aboutUs.links}
