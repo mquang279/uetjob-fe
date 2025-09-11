@@ -1,5 +1,6 @@
 import { ChevronFirst, ChevronLast, ClosedCaption, SidebarClose } from "lucide-react"
 import { useState } from "react"
+import { NavLink } from "react-router"
 
 const Sidebar = ({ children }) => {
     const [expanded, setExpanded] = useState(false)
@@ -25,11 +26,11 @@ const Sidebar = ({ children }) => {
     )
 }
 
-const SideBarItem = ({ icon, text }) => {
+const SideBarItem = ({ icon, text, link }) => {
     return (
         <li className=" flex relative items-center py-2 px-2 gap-3 rounded-lg hover:bg-red-600">
             {icon}
-            <span>{text}</span>
+            <NavLink to={link}>{text}</NavLink>
         </li >
     )
 }

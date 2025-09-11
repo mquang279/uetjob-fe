@@ -33,6 +33,7 @@ const Header = () => {
                                     key={index}
                                     icon={item.icon}
                                     text={item.name}
+                                    link={item.link}
                                 />)
                         })}
                     </>
