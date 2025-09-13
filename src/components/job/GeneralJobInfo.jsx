@@ -3,21 +3,21 @@ import { CircleDollarSign, MapPin, Hourglass, Clock, Heart, Send, Building2, Pin
 
 const GeneralJobInfo = ({ job }) => {
     return (
-        <div className='bg-white rounded-lg inset-shadow-xs p-4'>
+        <div className='bg-white rounded-lg shadow-md p-4 mt-4'>
             <div className='general-info'>
                 <h1 className='font-bold text-xl'>Thông tin chung</h1>
-                <div className="company-info mt-3 text-sm grid grid-cols-3 gap-y-4 gap-x-0">
-                    <UserStar className='bg-red-600 px-2 py-2 rounded-full text-white w-10 h-10' />
+                <div className="company-info mt-3 text-sm grid grid-cols-3 gap-y-4 gap-x-0 px-5">
+                    <UserStar className='bg-gray-900 px-2 py-2 rounded-full text-white w-10 h-10' />
                     <div className='col-span-2'>
                         <p className='text-gray-700'>Cấp bậc</p>
                         <p className='font-bold'>{mapCandidateLevel(job.candidateLevel) || 'Không yêu cầu'}</p>
                     </div>
-                    <Users className='bg-red-600 px-2 py-2 rounded-full text-white w-10 h-10' />
+                    <Users className='bg-gray-900 px-2 py-2 rounded-full text-white w-10 h-10' />
                     <div className='col-span-2'>
                         <p className='text-gray-700'>Số lượng tuyển</p>
                         <p className='font-bold'>{job.quantity} người</p>
                     </div>
-                    <BriefcaseBusiness className='bg-red-600 px-2 py-2 rounded-full  text-white w-10 h-10' />
+                    <BriefcaseBusiness className='bg-gray-900 px-2 py-2 rounded-full  text-white w-10 h-10' />
                     <div className='col-span-2'>
                         <p className='text-gray-700'>Hình thức làm việc</p>
                         <p className='font-bold'>{mapJobType(job.jobType) || 'Không xác định'}</p>
@@ -30,7 +30,7 @@ const GeneralJobInfo = ({ job }) => {
                     {job.skills && job.skills.length > 0 ?
                         job.skills.map((skill, index) => {
                             console.log(skill);
-                            return <span key={index} className='bg-gray-300 px-2 py-1 rounded-2xl whitespace-nowrap'>{skill.name}</span>;
+                            return <span key={index} className='bg-gray-200 px-2 py-1 rounded-2xl whitespace-nowrap'>{skill.name}</span>;
                         }) :
                         <p>Không yêu cầu kỹ năng</p>
                     }

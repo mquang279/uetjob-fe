@@ -10,16 +10,6 @@ import JobDescription from '../../components/job/JobDescription';
 import CompanyInfo from '../../components/job/CompanyInfo';
 import GeneralJobInfo from '../../components/job/GeneralJobInfo'
 
-const SearchHeader = () => {
-    return (
-        <div className='bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full px-4 lg:px-36 py-4'>
-            <SearchBar />
-        </div>
-    )
-}
-
-
-
 const JobPage = () => {
     const { id } = useParams()
     const { data: job, isLoading: jobLoading, error: jobError } = useGetJobById(id)
@@ -53,16 +43,18 @@ const JobPage = () => {
     }
 
     return (
-        <div className="lg:grid lg:grid-cols-4 lg:gap-y-6 lg:gap-x-4 lg:px-20 
-                            py-4 mx-2 flex flex-col gap-4 !bg-[rgb(247,247,247)]">
+        <div className="lg:grid lg:grid-cols-6 lg:gap-x-4 lg:px-30 
+                            py-4 mx-2 flex flex-col gap-4 text-global-white">
             <JobHeader job={job} />
-            <CompanyInfo
-                company={company}
-                isLoading={companyLoading}
-                error={companyError}
-            />
+            <div className='col-span-2 row-span-2'>
+                <CompanyInfo
+                    company={company}
+                    isLoading={companyLoading}
+                    error={companyError}
+                />
+                <GeneralJobInfo job={job} />
+            </div>
             <JobDescription job={job} />
-            <GeneralJobInfo job={job} />
         </div>
     )
 }

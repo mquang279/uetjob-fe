@@ -62,20 +62,14 @@ const JobDisplay = () => {
     }
 
     return (
-        <div className="job-display !bg-[rgb(247,247,247)]">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="job-display">
+            <div className="container mx-auto text-global-white px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 {!isLoading && jobs.length > 0 && (
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                            {jobs.length > 15 ? 'Top 15 Jobs' : `${jobCount} Jobs Found`}
+                        <h2 className="text-2xl font-bold mb-2">
+                            Việc làm tốt nhất
                         </h2>
-                        <p className="text-gray-600">
-                            {jobs.length > 15
-                                ? `Showing 15 of ${jobs.length} available positions`
-                                : 'All available positions'
-                            }
-                        </p>
                     </div>
                 )}
 

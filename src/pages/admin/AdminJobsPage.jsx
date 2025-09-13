@@ -170,7 +170,7 @@ const AdminJobsPage = () => {
             setShowModal(false)
             form.resetFields()
         } catch (error) {
-            console.log(error)
+            openNotification('error', 'Create job failed', `Failed to create the job: ${error.message}`)
         }
     }
 

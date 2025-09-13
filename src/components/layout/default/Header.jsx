@@ -24,7 +24,14 @@ const Header = () => {
 
     return (
         <div className="header w-full sticky top-0 z-50">
-            <div className="bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full h-[70px] flex justify-between items-center px-[30px] border-b-[0.5px] border-gray-600">
+            {/* Azure Depths Background */}
+            <div
+                className="absolute inset-0 z-0"
+                style={{
+                    background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+                }}
+            />
+            <div className="text-white w-full h-[70px] flex justify-between items-center px-[30px] shadow-sm relative z-10">
                 {/* <Sidebar /> */}
                 <Sidebar>
                     <>
@@ -47,7 +54,7 @@ const Header = () => {
 
                 {/* Nav items */}
                 <div className="hidden lg:flex header-nav w-full">
-                    <ul className="flex w-full gap-9 font-medium text-[rgb(166,166,166)]">
+                    <ul className="flex w-full gap-9 font-medium">
                         {NAV_ITEMS.map((item, index) =>
                             <li key={index} className="hover:text-white cursor-pointer">
                                 <NavLink to={item.link}>{item.name}</NavLink>
@@ -68,11 +75,11 @@ const Header = () => {
                                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-semibold">
                                     {user.username?.charAt(0).toUpperCase() || 'U'}
                                 </div>
-                                <span className="hidden lg:flex text-white">{user.username || user.email}</span>
+                                <span className="hidden lg:flex">{user.username || user.email}</span>
                             </div>
                             <button
                                 onClick={handleLogout}
-                                className="hidden lg:flex hover:underline cursor-pointer text-white"
+                                className="hidden lg:flex hover:underline cursor-pointer"
                             >
                                 Logout
                             </button>

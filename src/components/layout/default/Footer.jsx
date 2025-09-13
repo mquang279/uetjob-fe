@@ -52,8 +52,15 @@ const FooterLogo = ({ src, alt }) => (
 
 const Footer = () => {
     return (
-        <footer className="footer w-full">
-            <div className="flex flex-col justify-between items-center gap-8 px-12 py-12 text-white bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)]">
+        <footer className="footer w-full relative">
+            {/* Azure Depths Background */}
+            <div
+                className="absolute inset-0 z-0"
+                style={{
+                    background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+                }}
+            />
+            <div className="flex flex-col justify-between items-center gap-8 px-12 py-12 text-white relative z-10">
                 <FooterLogo
                     src={FOOTER_DATA.logo.src}
                     alt={FOOTER_DATA.logo.alt}
