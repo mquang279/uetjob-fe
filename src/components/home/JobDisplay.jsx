@@ -5,7 +5,7 @@ import { useGetActiveJobs } from '../../hooks/job/useGetActiveJobs';
 import { useActiveJobsCount } from '../../hooks/job/useActiveJobsCount';
 
 const JobDisplay = () => {
-    const pageSize = 9
+    const pageSize = 12
     const { data: jobCount } = useActiveJobsCount()
     const [page, setPage] = useState(1)
     const { data, isLoading, error } = useGetActiveJobs({ page: page - 1, pageSize })
@@ -62,25 +62,17 @@ const JobDisplay = () => {
     }
 
     return (
-        <div className="job-display" style={{ backgroundColor: 'rgb(243, 245, 247)' }}>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
+        <div className="job-display">
+            <div className="container mx-auto text-global-white px-4 sm:px-6 lg:px-8 py-8">
                 {!isLoading && jobs.length > 0 && (
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                            {jobs.length > 15 ? 'Top 15 Jobs' : `${jobCount} Jobs Found`}
+                        <h2 className="text-2xl font-bold mb-2">
+                            Việc làm tốt nhất
                         </h2>
-                        <p className="text-gray-600">
-                            {jobs.length > 15
-                                ? `Showing 15 of ${jobs.length} available positions`
-                                : 'All available positions'
-                            }
-                        </p>
                     </div>
                 )}
 
-                {/* Jobs Grid - 3 columns, responsive */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                     {!isLoading && jobs.map((job) => (
                         <JobCard
                             key={job.id}
@@ -89,7 +81,7 @@ const JobDisplay = () => {
                     ))}
                 </div>
 
-                {!isLoading && jobCount > 9 && (
+                {!isLoading && jobCount > 12 && (
                     <div className='mt-4'>
                         <ConfigProvider
                             theme={{

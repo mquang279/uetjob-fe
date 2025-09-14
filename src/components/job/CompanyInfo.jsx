@@ -19,7 +19,7 @@ const CompanyInfo = ({ company, isLoading, error }) => {
 
     if (!company) {
         return (
-            <div className="bg-white rounded-md row-span-3 p-4 flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow row-span-3 p-4 flex items-center justify-center">
                 <div className="text-center">
                     <p className="text-sm text-gray-500">No company info available</p>
                 </div>
@@ -28,7 +28,7 @@ const CompanyInfo = ({ company, isLoading, error }) => {
     }
 
     return (
-        <div className="bg-white rounded-md p-4 shadow-lg h-fit">
+        <div className="bg-white rounded-lg shadow p-4 h-fit">
             <NavLink to={`/companies/${company.id}`} className="company-name flex gap-4 items-center">
                 {company ? (
                     <div className='w-20 h-20'>

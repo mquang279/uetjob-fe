@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axiosClient from '../../utils/axiosClient';
 
-const useGetActiveJobs = ({ page = 0, pageSize = 9 }) => {
+const useGetActiveJobs = ({ page = 0, pageSize = 12 }) => {
     return useQuery({
         queryKey: ['active-jobs', page, pageSize],
         queryFn: async () => {

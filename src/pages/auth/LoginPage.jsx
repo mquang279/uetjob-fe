@@ -18,14 +18,14 @@ const BENEFITS = [
 
 const BenefitsList = () => (
     <div className="bg-gray-50 p-6 rounded-lg">
-        <h2 className="font-bold text-xl lg:text-2xl text-black mb-6 leading-tight">
+        <h2 className="font-bold text-xl lg:text-2xl text-gray-900 mb-6 leading-tight">
             Sign in to get instant access to thousands of reviews and salary information
         </h2>
         <ul className="space-y-4">
             {BENEFITS.map((benefit, index) => (
                 <li key={index} className="flex items-start gap-3">
                     <Check className="text-green-500 flex-shrink-0 mt-0.5" size={20} />
-                    <span className="text-black leading-relaxed">{benefit}</span>
+                    <span className="text-gray-900 leading-relaxed">{benefit}</span>
                 </li>
             ))}
         </ul>
@@ -33,7 +33,6 @@ const BenefitsList = () => (
 )
 
 
-// Main LoginPage Component
 const LoginPage = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -57,7 +56,6 @@ const LoginPage = () => {
             ...prev,
             [field]: e.target.value
         }))
-        // Clear error when user starts typing
         if (error) setError('')
     }
 
@@ -69,7 +67,6 @@ const LoginPage = () => {
         try {
             await login(formData.email, formData.password)
             console.log('Login successful')
-            // Redirect to home page after successful login
             navigate('/')
         } catch (error) {
             console.error('Login error:', error)
@@ -79,7 +76,6 @@ const LoginPage = () => {
         }
     }
 
-    // Show loading while checking authentication status
     if (loading) {
         return (
             <div className="bg-gray-50 min-h-screen flex items-center justify-center">
@@ -96,14 +92,13 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="bg-gray-50 min-h-screen flex items-center">
+        <div className="bg-gray-50 min-h-screen flex items-center text-gray-900">
             <main className="container mx-auto px-4 py-6 lg:py-8 w-full">
                 <div className="flex flex-col items-center lg:flex-row gap-8 lg:gap-16 xl:gap-24 max-w-6xl mx-auto">
-                    {/* Login Form Section */}
                     <div className="flex-1 max-w-md mx-auto lg:mx-0">
-                        <div className="bg-white p-6 lg:p-8 rounded-lg shadow-sm border">
+                        <div className="bg-white p-6 lg:p-8 rounded-lg shadow-sm lg:border">
                             <header className="mb-6">
-                                <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-3">
+                                <h1 className="text-2xl lg:text-3xl font-bold mb-3">
                                     Welcome to UETJob
                                 </h1>
                                 <p className="text-sm text-gray-600 leading-relaxed">
@@ -119,10 +114,8 @@ const LoginPage = () => {
                                 </p>
                             </header>
 
-                            {/* Google Sign In */}
-                            <Button
-                                className="w-full mb-4"
-                                variant="secondary"
+                            <button
+                                className="flex items-center justify-center w-full border-2 border-gray-900 py-3 text-gray-900 font-bold rounded-md hover:bg-gray-900 hover:text-white"
                                 onClick={handleGoogleSignIn}
                                 disabled={isLoading}
                             >
@@ -131,8 +124,8 @@ const LoginPage = () => {
                                     src={GOOGLE_LOGO_URL}
                                     alt="Google"
                                 />
-                                Sign In with Google
-                            </Button>
+                                <p>Sign In with Google</p>
+                            </button>
 
                             <Divider text="or" />
 
@@ -154,25 +147,22 @@ const LoginPage = () => {
                                     toggleShowPassword={() => setShowPassword(!showPassword)}
                                 />
 
-                                {/* Error Message */}
                                 {error && (
                                     <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
                                         {error}
                                     </div>
                                 )}
 
-                                <Button
+                                <button
                                     type="submit"
-                                    variant="primary"
-                                    className="w-full"
+                                    className="w-full bg-gray-900 py-3 rounded-md font-bold text-white hover:bg-gray-800"
                                     disabled={isLoading || !formData.email || !formData.password}
                                 >
                                     {isLoading ? 'Signing In...' : 'Sign In with Email'}
-                                </Button>
+                                </button>
                             </form>
 
-                            {/* Sign Up Link */}
-                            <p className="text-center text-gray-600 mt-6">
+                            <p className="text-center text-gray-900 mt-6">
                                 Don't have an account?{' '}
                                 <NavLink to="/register" className="text-blue-600 font-medium hover:underline">
                                     Sign up now!

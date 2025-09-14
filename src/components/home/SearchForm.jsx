@@ -17,19 +17,26 @@ const SearchForm = () => {
     const { data: jobCount } = useActiveJobsCount()
 
     return (
-        <div className="search-form bg-[linear-gradient(90deg,rgba(20,20,20,1)_55%,rgba(110,21,25,1)_100%,rgba(0,212,255,1)_100%)] text-white w-full h-auto px-4 md:px-20 xl:px-32 py-[64px]">
-            <h1 className="text-3xl font-black">{jobCount} IT Jobs For "Chất" Developers</h1>
-
-            <div className="py-4">
-                <SearchBar />
-            </div>
-
-            <div className="suggestion flex gap-8 w-full items-center">
-                <p className="font-medium">Suggestions for you:</p>
-                <div className="suggestion-field flex gap-2 flex-wrap">
-                    {SKILL_SUGGESTIONS.map((skill, index) =>
-                        <NavLink href="" className="py-[6px] px-[12px] font-semibold border bg-black border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-[#414042]" key={index}>{skill}</NavLink>
-                    )}
+        <div className="search-form w-full relative">
+            <div
+                className="absolute inset-0 z-0"
+                style={{
+                    background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+                }}
+            />
+            <div className=" text-white w-full h-auto px-4 md:px-20 lg:px-60 py-[64px] relative z-10">
+                <h1 className="text-2xl lg:text-3xl font-black">{jobCount} IT Jobs For
+                    <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"> "Chất" </span> Developers</h1>
+                <div className="py-4">
+                    <SearchBar />
+                </div>
+                <div className="suggestion lg:flex gap-8 w-full items-center">
+                    <p className="font-medium mb-4 lg:mb-0">Suggestions for you:</p>
+                    <div className="suggestion-field flex gap-2 flex-wrap">
+                        {SKILL_SUGGESTIONS.map((skill, index) =>
+                            <NavLink href="" className="py-[6px] px-[12px] font-semibold border bg-white/5 shadow-lg border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-gray-900 hover:text-white" key={index}>{skill}</NavLink>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

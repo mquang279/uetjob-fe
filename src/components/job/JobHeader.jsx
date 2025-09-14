@@ -14,11 +14,11 @@ const formatSalary = (minSalary, maxSalary) => {
 
 const JobInfoItem = ({ tag, info, Icon }) => {
     return (
-        <div className='location flex gap-2 items-center'>
-            <Icon className='bg-red-600 px-1 py-1 rounded-2xl text-red-600 w-8 h-8 fill-white' />
+        <div className='location flex flex-col justify-center items-center gap-2 lg:flex-row'>
+            <Icon className='bg-gray-900 fill-transparent px-1.5 py-1.5 rounded-2xl text-white w-8 h-8' />
             <div>
-                <p className='text-sm'>{tag}</p>
-                <p className='font-semibold'>{info}</p>
+                <p className='lg:text-sm text-nowrap text-center lg:text-left'>{tag}</p>
+                <p className='font-semibold text-nowrap text-center lg:text-left'>{info}</p>
             </div>
         </div>
     )
@@ -32,11 +32,11 @@ const JobHeader = ({ job }) => {
     };
 
     return (
-        <div className="col-span-3 py-4 px-9 bg-white rounded-md shadow-lg">
+        <div className="col-span-4 py-4 px-4 lg:px-9 lg:py-9 bg-white rounded-lg shadow-md h-fit">
             <div className="job-title text-2xl font-semibold">
                 {job.title}
             </div>
-            <div className='job-info flex gap-30 justify-between'>
+            <div className='job-info text-xs lg:text-sm flex lg:gap-10 mt-4 justify-between lg:my-6'>
                 <JobInfoItem
                     tag='Thu nhập'
                     info={formatSalary(job.minSalary, job.maxSalary)}
@@ -53,26 +53,26 @@ const JobHeader = ({ job }) => {
                     Icon={Hourglass}
                 />
             </div>
-            <div className="end-date bg-gray-100 inline-block px-2 py-0.5 mb-2 rounded-md my-2">
-                <p className='flex gap-2 items-center text-gray-800'>
+            <div className="end-date bg-gray-300 inline-block px-2 py-0.5 mb-2 rounded-md my-2 lg:my-2">
+                <p className='flex gap-2 items-center text-sm'>
                     <Clock className='w-4 h-4' />
                     {job.endDate ? `Hạn nộp hồ sơ: ${new Date(job.endDate).toLocaleDateString('en-GB')}` : 'Không thời hạn'}
                 </p>
             </div>
             <div className='flex gap-4 mt-2'>
-                <button className='flex items-center gap-2 basis-5/6 justify-center bg-red-600 text-white px-3 py-2 flex-1 rounded-md text-sm font-bold hover:bg-red-700'>
+                <button className='flex py-3 items-center gap-2 basis-5/6 justify-center bg-gray-900 text-white px-3 lg:py-2 flex-1 rounded-md text-sm font-bold hover:bg-gray-800'>
                     <Send className='w-4 h-4' />
                     <p>Ứng tuyển ngay</p>
                 </button>
                 <button
                     onClick={handleSaveJob}
-                    className={`flex items-center gap-2 basis-1/6 justify-center px-3 py-2 rounded-md text-sm font-bold transition-colors border ${isSaved
-                        ? 'bg-red-600 text-white border-red-600 hover:bg-red-700'
-                        : 'bg-white border-red-600 text-red-600 hover:bg-red-600 hover:text-white'
+                    className={`flex items-center gap-2 basis-1/6 justify-center px-3 py-2 rounded-md text-sm font-bold transition-colors ${isSaved
+                        ? 'bg-gray-900 text-white ring ring-gray-900 hover:bg-gray-800'
+                        : 'bg-white text-gray-900 ring ring-gray-900 hover:bg-gray-900 hover:text-white'
                         }`}
                 >
                     <Heart className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
-                    <p>{isSaved ? 'Đã lưu' : 'Lưu tin'}</p>
+                    <p className='hidden lg:flex'>{isSaved ? 'Đã lưu' : 'Lưu tin'}</p>
                 </button>
             </div>
         </div>
