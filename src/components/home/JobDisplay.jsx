@@ -11,8 +11,6 @@ const JobDisplay = () => {
     const { data, isLoading, error } = useGetActiveJobs({ page: page - 1, pageSize })
     const jobs = data?.content || []
 
-    console.log(jobs)
-
     if (error) {
         return (
             <div className="job-display">

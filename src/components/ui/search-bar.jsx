@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Building2, Search } from "lucide-react"
 import Button from "./button"
 import { useSearchJob } from "../../hooks/job/useSearchJobs"
@@ -22,10 +22,6 @@ const SearchBar = () => {
     }
 
     const jobs = data?.content
-
-    useEffect(() => {
-        console.log(data)
-    }, [data])
 
     return (
         <div className="search-input flex gap-4">

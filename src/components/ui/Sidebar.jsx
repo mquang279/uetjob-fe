@@ -9,7 +9,6 @@ const Sidebar = ({ children }) => {
         !expanded ? <ChevronLast className="lg:hidden" onClick={() => setExpanded(true)} /> :
             <aside className={`h-screen lg:hidden fixed top-0 left-0 z-50`}>
                 <nav className="h-full w-full flex flex-col shadow-sm relative">
-                    {/* Azure Depths Background */}
                     <div
                         className="absolute inset-0 z-0"
                         style={{
