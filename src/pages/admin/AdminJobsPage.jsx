@@ -2,7 +2,6 @@ import { Button, Modal, Table, Form, Input, Select, DatePicker, InputNumber, Swi
 import { Plus, Pen, Trash } from 'lucide-react';
 import { useGetAllJobs } from "../../hooks/job/useGetAllJobs";
 import { useEffect, useState } from "react";
-import { useJobsCount } from "../../hooks/job/useJobsCount";
 import { useGetAllCompanies } from "../../hooks/company/useGetAllCompanies";
 import { useCreateJob } from "../../hooks/job/useCreateJob";
 import { ConfigProvider, Pagination } from 'antd';
@@ -18,7 +17,6 @@ const AdminJobsPage = () => {
     const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
-    const { data: jobCount } = useJobsCount()
     const [currentJob, setCurrentJob] = useState(null)
     const { data } = useGetAllJobs({ page: page - 1, pageSize })
     const { data: companiesData } = useGetAllCompanies({ page: 0, pageSize: 100 })
@@ -29,6 +27,7 @@ const AdminJobsPage = () => {
     const updateJobMutation = useUpdateJob()
     const createSkillMutation = useCreateSkill()
 
+    const jobCount = data?.totalElements
     const dataSource = data?.content || []
     const companies = companiesData?.content || []
     const skills = skillsData?.content || []
