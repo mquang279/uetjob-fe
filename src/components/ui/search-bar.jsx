@@ -54,7 +54,7 @@ const SearchBar = () => {
                         dataLength={jobs.length}
                         next={() => setPage(prev => prev + 1)}
                         hasMore={page < data?.totalPages - 1}
-                        loader={<h4 className="text-black z-100">Loading...</h4>}
+                        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                         height={400}
                         endMessage={
                             <p style={{ textAlign: "center" }}>
