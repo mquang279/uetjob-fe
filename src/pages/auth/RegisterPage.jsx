@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import FormInput from "../../components/login/FormInput"
 import PasswordInput from "../../components/login/PasswordInput"
+import { Check, X } from "lucide-react"
 
 const PASSWORD_REGEX = {
     specialChar: /[^A-Za-z0-9]/,
@@ -50,14 +51,15 @@ const RegisterPage = () => {
 
     const PasswordValidateItem = ({ rule, text }) => {
         return (
-            <li className={rule ? 'text-green-500' : 'text-red-600'}>
+            <li className={`flex gap-2 ${rule ? 'text-green-500' : 'text-red-600'}`}>
+                {rule ? <Check className="w-3 h-auto" /> : <X className="w-3 h-auto" />}
                 {text}
             </li>
         )
     }
 
     return (
-        <div className="px-12 lg:px-100 mt-8 text-gray-900">
+        <div className="px-12 lg:px-100 2xl:px-150 mt-8 text-gray-900 my-4">
             <h2 className="font-bold text-xl">Welcome to UET Job</h2>
             <h1 className="font-extrabold text-3xl my-3">Sign Up</h1>
             <form action={handleRegister}>
@@ -88,7 +90,7 @@ const RegisterPage = () => {
                         register={true}
                     />
                     <div>
-                        <p>Mật khẩu cần có:</p>
+                        <p className="text-md">Mật khẩu cần có:</p>
                         <ul className="text-sm ml-2">
                             {PASSWORD_RULES.map((rule, index) => (
                                 <PasswordValidateItem key={index} rule={passwordValidation[rule.field]} text={rule.text} />

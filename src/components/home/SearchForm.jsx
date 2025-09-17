@@ -24,7 +24,7 @@ const SearchForm = () => {
                     background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
                 }}
             />
-            <div className=" text-white w-full h-auto px-4 md:px-20 lg:px-60 py-[64px] relative z-10">
+            <div className=" text-white w-full h-auto px-4 md:px-20 lg:px-60 py-16 2xl:py-32 relative z-10">
                 <h1 className="text-2xl lg:text-3xl font-black">{jobCount} IT Jobs For
                     <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"> "Chất" </span> Developers</h1>
                 <div className="py-4">
