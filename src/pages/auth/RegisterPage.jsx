@@ -81,7 +81,7 @@ const RegisterPage = () => {
                     required={true}
                 />
 
-                <div className="password-field">
+                <div className="password-field mb-2">
                     <PasswordInput
                         value={formData.password}
                         onChange={handleInputChange('password')}
@@ -98,6 +98,10 @@ const RegisterPage = () => {
                         </ul>
                     </div>
                 </div>
+
+                <button type="submit" className="bg-gray-900 text-white w-full py-3 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={!Object.values(passwordValidation).every(Boolean)}>
+                    Đăng ký
+                </button>
 
             </form>
         </div>
