@@ -18,11 +18,15 @@ function App() {
               Layout = Fragment
             }
 
+            let Guard = route.guard ? route.guard : Fragment
+
             return (
               <Route key={index} path={route.path}
                 element={
                   <Layout>
-                    <Page />
+                    <Guard>
+                      <Page />
+                    </Guard>
                   </Layout>
                 }
               />

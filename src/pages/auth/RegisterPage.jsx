@@ -2,6 +2,9 @@ import { useMemo, useState } from "react"
 import FormInput from "../../components/login/FormInput"
 import PasswordInput from "../../components/login/PasswordInput"
 import { Check, X } from "lucide-react"
+import { useRegister } from "../../hooks/auth/useRegister"
+import { useAuth } from "../../providers/AuthProvider"
+import { useNavigate } from "react-router"
 
 const PASSWORD_REGEX = {
     specialChar: /[^A-Za-z0-9]/,
@@ -19,7 +22,11 @@ const PASSWORD_RULES = [
 ]
 
 const RegisterPage = () => {
+    const useRegisterMutation = useRegister()
     const [showPassword, setShowPassword] = useState(false)
+    const [error, setError] = useState()
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         username: '',
@@ -45,8 +52,16 @@ const RegisterPage = () => {
         }))
     }
 
-    const handleRegister = () => {
-
+    const handleRegister = async (e) => {
+        e.preventDefault()
+        try {
+            await useRegisterMutation.mutateAsync(formData)
+            await login(formData.email, formData.password)
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+            setError(error.response.data.message)
+        }
     }
 
     const PasswordValidateItem = ({ rule, text }) => {
@@ -62,7 +77,7 @@ const RegisterPage = () => {
         <div className="px-12 lg:px-100 2xl:px-150 mt-8 text-gray-900 my-4">
             <h2 className="font-bold text-xl">Welcome to UET Job</h2>
             <h1 className="font-extrabold text-3xl my-3">Sign Up</h1>
-            <form action={handleRegister}>
+            <form action={handleRegister} onSubmit={handleRegister}>
                 <FormInput
                     label="Họ và tên"
                     type="text"
@@ -98,6 +113,12 @@ const RegisterPage = () => {
                         </ul>
                     </div>
                 </div>
+
+                {error &&
+                    (<div>
+                        {error}
+                    </div>)
+                }
 
                 <button type="submit" className="bg-gray-900 text-white w-full py-3 rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={!Object.values(passwordValidation).every(Boolean)}>
                     Đăng ký
