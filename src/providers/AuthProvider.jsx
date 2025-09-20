@@ -18,6 +18,7 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
     const [token, setToken] = useState()
     const [user, setUser] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
     const updateToken = async (newToken) => {
         setToken(newToken)
@@ -43,6 +44,7 @@ const AuthProvider = ({ children }) => {
 
         const fetchUserData = async () => {
             const existingToken = localStorage.getItem('token')
+
             if (existingToken) {
                 setToken(existingToken)
             }
@@ -59,6 +61,8 @@ const AuthProvider = ({ children }) => {
                 setToken(null)
                 setUser(null)
                 localStorage.removeItem('token')
+            } finally {
+                setIsLoading(false)
             }
         }
         fetchUserData()
@@ -66,7 +70,6 @@ const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const response = await AuthService.login(email, password)
-        console.log('Login response:', response)
         setToken(response.accessToken)
         setUser(response.user)
         localStorage.setItem('token', response.accessToken)
@@ -77,7 +80,7 @@ const AuthProvider = ({ children }) => {
         await AuthService.logout()
         setToken(null)
         setUser(null)
-        localStorage.clear('token')
+        localStorage.removeItem('token') 
     }
 
     const value = {
@@ -86,7 +89,8 @@ const AuthProvider = ({ children }) => {
         login,
         logout,
         updateToken,
-        isAuthenticated: !!token
+        isAuthenticated: !!token && !!user,
+        isLoading
     }
 
     return (
