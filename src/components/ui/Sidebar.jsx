@@ -7,7 +7,7 @@ const Sidebar = ({ children }) => {
 
     return (
         !expanded ? <ChevronLast className="lg:hidden" onClick={() => setExpanded(true)} /> :
-            <aside className={`h-screen lg:hidden fixed top-0 left-0 z-50`}>
+            <aside className={`h-screen lg:hidden fixed top-0 left-0`}>
                 <nav className="h-full w-full flex flex-col shadow-sm relative">
                     <div
                         className="absolute inset-0 z-0"
