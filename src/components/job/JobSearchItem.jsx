@@ -24,7 +24,7 @@ const JobSearchItem = ({ job }) => {
     }
 
     return (
-        <NavLink to={`/jobs/${job.id}`} className="bg-white rounded-md">
+        <NavLink to={`/jobs/${job.id}`} className="bg-white rounded-md hover:shadow">
             <div className="flex gap-4 py-4 px-4">
                 <NavLink to={`/companies/${job.company.id}`} className="w-25 h-25 border border-gray-200 rounded-md">
                     {job.company ? (
@@ -33,14 +33,14 @@ const JobSearchItem = ({ job }) => {
                         <Building2 className="w-6 h-6 text-black" />
                     )}
                 </NavLink>
-                <div className="flex flex-col gap-3 w-full">
+                <div className="flex flex-col gap-2 w-full">
                     <div className="flex w-full justify-between">
                         <p className="font-semibold">{job.title}</p>
                         <p className="font-semibold text-green-600">{formatSalary(job.minSalary, job.maxSalary)}</p>
                     </div>
                     <NavLink to={`/companies/${job.company.id}`} className="text-gray-700 text-sm font-semibold">{job.company.name}</NavLink>
-                    <span className="bg-gray-200 w-fit px-2 py-1 text-xs rounded-xl">{job.location}</span>
-                    <hr className="text-gray-200" />
+                    <span className="bg-gray-100 w-fit px-2 py-1 text-xs rounded-xl">{job.location}</span>
+                    <hr className="text-gray-100" />
                     <div className="flex justify-between items-center">
                         <div className="flex gap-3">
                             {job.skills.map((skill, index) => (
@@ -48,7 +48,7 @@ const JobSearchItem = ({ job }) => {
                             ))}
                         </div>
                         <div className="flex gap-2 items-center">
-                            <p className="text-sm text-gray-600 font-bold">Còn {getDaysRemain(job.endDate)} ngày để ứng tuyển</p>
+                            <p className="text-sm text-gray-500 font-bold">Còn {getDaysRemain(job.endDate)} ngày để ứng tuyển</p>
                             <button className='border-1 px-1 rounded-2xl hover:bg-red-100'>
                                 <Heart className={`w-4`} />
                             </button>

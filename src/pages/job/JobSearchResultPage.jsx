@@ -6,16 +6,17 @@ import { useSearchJob } from '../../hooks/job/useSearchJobs'
 import LoadingSpinner from '../../components/ui/LoadingSpinner'
 import ErrorDisplay from '../../components/ui/ErrorDisplay'
 import JobSearchItem from '../../components/job/JobSearchItem'
+import { Pagination } from 'antd'
 
 const JobSearchResultPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [page, setPage] = useState(0)
-    const pageSize = 15
+    const [page, setPage] = useState(1)
+    const pageSize = 10
 
     const keyword = searchParams.get('keyword') || ''
 
     const { data, isLoading, error } = useSearchJob({
-        page,
+        page: page - 1,
         pageSize,
         keyword
     })
@@ -36,7 +37,7 @@ const JobSearchResultPage = () => {
 
 
     return (
-        <div className='job-result-page'>
+        <div className='job-result-page mb-6'>
             <div className='search-bar relative'>
                 <div
                     className="absolute inset-0 -z-10"
@@ -52,19 +53,28 @@ const JobSearchResultPage = () => {
             <div className='px-15 mt-3 mx-20 2xl:mx-60'>
                 <h1 className='font-semibold'>{totalJobs} việc làm {keyword}</h1>
                 <div className='flex gap-8'>
-                    <div className='min-h-200 bg-red-500'>
+                    <div className='min-h-200 bg-red-500 '>
                         <h2>Lọc nâng cao</h2>
                     </div>
 
                     <div className='min-h-200 flex-1'>
-                        <h2>Kết quả tìm kiếm</h2>
+                        <h2 className='font-bold'>Kết quả tìm kiếm</h2>
                         <div className='flex flex-col gap-4 my-3'>
                             {jobs.map((job, index) => (
                                 <JobSearchItem key={index} job={job} />
                             ))}
                         </div>
+                        <Pagination
+                            align="center"
+                            current={page}
+                            onChange={(newPage) => setPage(newPage)}
+                            total={totalJobs}
+                            pageSize={pageSize}
+                            showSizeChanger={false}
+                        />
                     </div>
                 </div>
+
             </div>
         </div>
     )
