@@ -51,13 +51,13 @@ const JobSearchResultPage = () => {
             </div>
 
             <div className='px-15 mt-3 mx-20 2xl:mx-60'>
-                <h1 className='font-semibold'>{totalJobs} việc làm {keyword}</h1>
                 <div className='flex gap-8'>
                     <div className='min-h-200 bg-red-500 '>
                         <h2>Lọc nâng cao</h2>
                     </div>
 
                     <div className='min-h-200 flex-1'>
+                        <h1 className='font-semibold text-gray-700'>Tuyển dụng {totalJobs} việc làm {keyword}</h1>
                         <h2 className='font-bold'>Kết quả tìm kiếm</h2>
                         <div className='flex flex-col gap-4 my-3'>
                             {jobs.map((job, index) => (
