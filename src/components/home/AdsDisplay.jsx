@@ -58,7 +58,7 @@ const CarouselSlide = ({ ads, onImageError }) => (
     </div>
 );
 
-const AdsDisplay = ({ className = '' }) => {
+const AdsDisplay = () => {
     const { data: filesData, isLoading, isError } = useListAllFiles('ads');
 
     const adsData = useMemo(() => {
@@ -78,7 +78,7 @@ const AdsDisplay = ({ className = '' }) => {
 
     if (isLoading) {
         return (
-            <div className={`ads-display py-2 bg-white ${className}`}>
+            <div className={`ads-display py-2 bg-white`}>
                 <div className="flex justify-center items-center py-8">
                     <span className="text-gray-500">Loading advertisements...</span>
                 </div>
@@ -93,7 +93,7 @@ const AdsDisplay = ({ className = '' }) => {
     }
 
     return (
-        <div className={`ads-display py-2 bg-white ${className}`}>
+        <div className={`ads-display py-2 bg-white`}>
             <Carousel {...ADS_CONFIG.carouselSettings}>
                 {adSlides.map((slideAds, index) => (
                     <CarouselSlide

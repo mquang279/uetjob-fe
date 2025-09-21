@@ -5,9 +5,9 @@ const GuestGuard = ({ children }) => {
     const { isAuthenticated } = useAuth()
     if (isAuthenticated) {
         return <Navigate to={"/"} />
+    } else {
+        return <>{children}</>
     }
-
-    return <>{children}</>
 }
 
 export default GuestGuard
