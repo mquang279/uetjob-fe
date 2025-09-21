@@ -6,7 +6,6 @@ import { ConfigProvider, Pagination } from 'antd';
 import { useCreateCompany } from "../../hooks/company/useCreateCompany";
 import { useUpdateCompany } from "../../hooks/company/useUpdateCompany";
 import useDeleteCompany from "../../hooks/company/useDeleteCompany";
-import { useCompaniesCount } from "../../hooks/company/useCompaniesCount";
 import useGetPresignedUrl from "../../hooks/storage/useGetPresignedUrl";
 import useUploadFileUsingPresignedUrl from "../../hooks/storage/useUploadFileUsingPresignedUrl";
 
@@ -16,7 +15,6 @@ const AdminCompaniesPage = () => {
     const [page, setPage] = useState(1)
     const [showModal, setShowModal] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
-    const { data: totalCompanies } = useCompaniesCount()
     const [currentCompany, setCurrentCompany] = useState(null)
     const { data: companiesData } = useGetAllCompanies({ page: page - 1, pageSize: pageSize })
     const [form] = Form.useForm()
@@ -27,6 +25,7 @@ const AdminCompaniesPage = () => {
     const uploadFileUsingPresignedUrl = useUploadFileUsingPresignedUrl()
 
     const dataSource = companiesData?.content || []
+    const totalCompanies = companiesData?.totalElements
 
     useEffect(() => {
         if (isEdit && currentCompany && showModal) {

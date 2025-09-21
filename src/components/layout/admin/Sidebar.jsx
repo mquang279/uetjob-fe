@@ -3,8 +3,10 @@ import { Layout, Menu, ConfigProvider } from 'antd';
 import { useNavigate } from 'react-router';
 import { Monitor, Backpack, Building2 } from 'lucide-react';
 const { Sider } = Layout;
+
 const labels = ['Dashboard', 'Jobs', 'Companies']
 const routes = ['/admin', '/admin/jobs', '/admin/companies']
+
 const items = [Monitor, Backpack, Building2].map(
     (icon, index) => ({
         key: String(index + 1),

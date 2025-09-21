@@ -1,19 +1,19 @@
 import { NavLink } from "react-router"
 import { Eye, EyeOff } from 'lucide-react'
 
-const PasswordInput = ({ value, onChange, showPassword, toggleShowPassword }) => (
-    <div className="mb-4">
-        <div className="flex justify-between items-center mb-2">
+const PasswordInput = ({ value, onChange, showPassword, toggleShowPassword, register = false }) => (
+    <div className="">
+        <div className="flex justify-between items-center">
             <label className="font-medium text-black">
                 Password <span className="text-red-500">*</span>
             </label>
-            <NavLink
+            {!register && <NavLink
                 to="/forgot-password"
                 className="text-blue-600 text-sm hover:underline"
                 tabIndex={-1}
             >
                 Forgot password?
-            </NavLink>
+            </NavLink>}
         </div>
         <div className="relative">
             <input

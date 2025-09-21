@@ -18,12 +18,17 @@ function App() {
               Layout = Fragment
             }
 
+            let Guard = route.guard ? route.guard : Fragment
+            const guardProps = route.guardProps || {}
+
             return (
               <Route key={index} path={route.path}
                 element={
-                  <Layout>
-                    <Page />
-                  </Layout>
+                  <Guard {...guardProps}>
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  </Guard>
                 }
               />
             )
