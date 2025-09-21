@@ -34,7 +34,7 @@ const SearchForm = () => {
                     <p className="font-medium mb-4 lg:mb-0">Suggestions for you:</p>
                     <div className="suggestion-field flex gap-2 flex-wrap">
                         {SKILL_SUGGESTIONS.map((skill, index) =>
-                            <NavLink href="" className="py-[6px] px-[12px] font-semibold border bg-white/5 shadow-lg border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-gray-900 hover:text-white" key={index}>{skill}</NavLink>
+                            <NavLink to={`/jobs/search?keyword=${skill}`} className="py-[6px] px-[12px] font-semibold border bg-white/5 shadow-lg border-[rgb(65,64,66)] rounded-3xl whitespace-nowrap hover:bg-gray-900 hover:text-white" key={index}>{skill}</NavLink>
                         )}
                     </div>
                 </div>

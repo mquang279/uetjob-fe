@@ -57,21 +57,30 @@ const JobSearchResultPage = () => {
                     </div>
 
                     <div className='min-h-200 flex-1'>
-                        <h1 className='font-semibold text-gray-700'>Tuyển dụng {totalJobs} việc làm {keyword}</h1>
+                        <h1 className='font-semibold'>Tuyển dụng {totalJobs} việc làm {keyword}</h1>
                         <h2 className='font-bold'>Kết quả tìm kiếm</h2>
-                        <div className='flex flex-col gap-4 my-3'>
-                            {jobs.map((job, index) => (
-                                <JobSearchItem key={index} job={job} />
-                            ))}
-                        </div>
-                        <Pagination
-                            align="center"
-                            current={page}
-                            onChange={(newPage) => setPage(newPage)}
-                            total={totalJobs}
-                            pageSize={pageSize}
-                            showSizeChanger={false}
-                        />
+                        {jobs.length != 0 ?
+                            (<div>
+                                <div className='flex flex-col gap-4 my-3'>
+                                    {jobs.map((job, index) => (
+                                        <JobSearchItem key={index} job={job} />
+                                    ))}
+                                </div>
+                                <Pagination
+                                    align="center"
+                                    current={page}
+                                    onChange={(newPage) => setPage(newPage)}
+                                    total={totalJobs}
+                                    pageSize={pageSize}
+                                    showSizeChanger={false}
+                                />
+                            </div>) :
+                            (
+                                <div className='w-full flex justify-center py-50'>
+                                    <p>Chưa tìm thấy việc làm phù hợp với yêu cầu của bạn</p>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
 
