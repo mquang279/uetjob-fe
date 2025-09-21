@@ -7,9 +7,7 @@ const AdminLayout = ({ children }) => {
     return (
         <div>
             <Header />
-            <Content style={{ margin: '24px 16px 0', overflow: 'auto' }}>
-                {children}
-            </Content>
+            {children}
         </div>
     )
 }
